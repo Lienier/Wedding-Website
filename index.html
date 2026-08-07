@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <meta name="theme-color" content="#ffffff" />
   <meta name="description" content="A modern minimalist digital wedding invitation." />
   <title>Philip & Ednalyn — 17.10.26</title>
@@ -40,20 +40,20 @@
         <a href="#rsvp">RSVP</a>
       </div>
       <div class="nav-date">17.10.26</div>
-      <button class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false">
-        <span></span><span></span>
-      </button>
     </div>
   </nav>
 
-  <div class="mobile-panel" id="mobilePanel">
-    <a href="#story">Our Story</a>
-    <a href="#day">The Day</a>
-    <a href="#people">Entourage</a>
-    <a href="#attire">Attire</a>
-    <a href="#gallery">Gallery</a>
-    <a href="#rsvp">RSVP</a>
-    <div class="mobile-date">17 · 10 · 2026</div>
+  <button class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false">
+    <span></span><span></span>
+  </button>
+
+  <div class="circle-nav" id="mobilePanel" aria-hidden="true">
+    <a href="#story" class="cn-item" style="--i:0">Story</a>
+    <a href="#day" class="cn-item" style="--i:1">Day</a>
+    <a href="#people" class="cn-item" style="--i:2">People</a>
+    <a href="#attire" class="cn-item" style="--i:3">Attire</a>
+    <a href="#gallery" class="cn-item" style="--i:4">Gallery</a>
+    <a href="#rsvp" class="cn-item" style="--i:5">RSVP</a>
   </div>
 
   <main>
