@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#ffffff" />
+  <meta name="description" content="A modern minimalist digital wedding invitation." />
+  <title>Philip & Ednalyn — 17.10.26</title>
+
+  <!-- Optional external fonts; the page still works with fallbacks if offline. -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Manrope:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="no-scroll">
+
+  <!-- OPEN INVITATION -->
+  <div class="gate" id="gate" aria-modal="true" role="dialog">
+    <div class="gate-inner">
+      <div class="gate-kicker">You’re Invited</div>
+      <div class="monogram">P<br>&amp;<br>E</div>
+      <h1 class="gate-title">Philip <span class="amp">&amp;</span> Ednalyn</h1>
+      <div class="gate-date">October 17, 2026 · Norzagaray, Bulacan</div>
+      <p class="gate-copy">Together with our families, we invite you to celebrate the beginning of our forever.</p>
+      <button class="btn" id="openInvitation">Open Invitation <span>→</span></button>
+    </div>
+  </div>
+
+  <!-- NAV -->
+  <nav class="nav" id="nav">
+    <div class="nav-inner">
+      <a class="brand" href="#home" aria-label="Home">P&amp;E</a>
+      <div class="nav-links">
+        <a href="#story">Our Story</a>
+        <a href="#day">The Day</a>
+        <a href="#people">Entourage</a>
+        <a href="#attire">Attire</a>
+        <a href="#gallery">Gallery</a>
+        <a href="#rsvp">RSVP</a>
+      </div>
+      <div class="nav-date">17.10.26</div>
+      <button class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false">
+        <span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <div class="mobile-panel" id="mobilePanel">
+    <a href="#story">Our Story</a>
+    <a href="#day">The Day</a>
+    <a href="#people">Entourage</a>
+    <a href="#attire">Attire</a>
+    <a href="#gallery">Gallery</a>
+    <a href="#rsvp">RSVP</a>
+    <div class="mobile-date">17 · 10 · 2026</div>
+  </div>
+
+  <main>
+    <!-- HERO -->
+    <section class="hero" id="home">
+      <div class="hero-pre reveal">Together with their families</div>
+      <h1 class="hero-title reveal">
+        Philip
+        <span class="amp">&amp;</span>
+        Ednalyn
+      </h1>
+      <div class="hero-meta reveal">
+        <span>October 17, 2026</span>
+        <span>•</span>
+        <span>Angat, Bulacan</span>
+      </div>
+
+      <div class="hero-photo-wrap reveal">
+        <img class="hero-photo" src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1800&q=88" alt="Wedding couple in an elegant setting">
+        <div class="photo-note left">01 / The Beginning</div>
+        <div class="photo-note right">Save The Date</div>
+      </div>
+
+      <div class="scroll-cue">
+        <span>Scroll to discover</span>
+        <div class="scroll-line"></div>
+      </div>
+    </section>
+
+    <!-- STATEMENT -->
+    <section class="section">
+      <div class="container statement-grid">
+        <h2 class="display statement-title reveal">We choose <span class="blue">each other,</span><br>every day.</h2>
+        <p class="statement-copy reveal reveal-delay">A celebration of the years behind us, the life ahead of us, and everyone who helped us get here.</p>
+      </div>
+    </section>
+
+    <!-- COLLAGE -->
+    <section class="section-tight">
+      <div class="container collage">
+        <figure class="c1 reveal">
+          <img src="https://images.unsplash.com/photo-1523438885200-e635ba2c371e?auto=format&fit=crop&w=1200&q=86" alt="Couple portrait">
+          <figcaption class="caption"><span>01</span><span>The Beginning</span></figcaption>
+        </figure>
+        <figure class="c2 reveal">
+          <img src="https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=1000&q=86" alt="Wedding detail">
+          <figcaption class="caption"><span>02</span><span>The Adventure</span></figcaption>
+        </figure>
+        <figure class="c3 reveal">
+          <img src="https://images.unsplash.com/photo-1532712938310-34cb3982ef74?auto=format&fit=crop&w=1000&q=86" alt="Romantic couple">
+          <figcaption class="caption"><span>03</span><span>The Yes</span></figcaption>
+        </figure>
+        <figure class="c4 reveal">
+          <img src="https://images.unsplash.com/photo-1507504031003-b417219a0fde?auto=format&fit=crop&w=900&q=86" alt="Engagement detail">
+          <figcaption class="caption"><span>04</span><span>Forever</span></figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- STORY -->
+    <section class="section" id="story">
+      <div class="container">
+        <div class="eyebrow reveal">02 / Our Story</div>
+        <h2 class="display story-intro-title reveal">Some stories<br>begin quietly.</h2>
+
+        <div class="story-block">
+          <div class="story-media reveal">
+            <img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=1200&q=86" alt="Couple walking together">
+          </div>
+          <div class="story-text reveal reveal-delay">
+            <div class="story-year">2019</div>
+            <h3 class="story-title">Where it started.</h3>
+            <p>It began in the most ordinary way — a conversation that lasted longer than expected, a friendship that felt easy, and days that slowly became impossible to imagine without each other.</p>
+          </div>
+        </div>
+
+        <div class="story-block reverse">
+          <div class="story-media reveal">
+            <img src="https://images.unsplash.com/photo-1494774157365-9e04c6720e47?auto=format&fit=crop&w=1200&q=86" alt="Engaged couple">
+          </div>
+          <div class="story-text reveal reveal-delay">
+            <div class="story-year">2025</div>
+            <h3 class="story-title">The yes.</h3>
+            <p>After years of shared plans, small adventures, quiet victories, and a thousand ordinary moments, one question turned everything we already knew into a promise.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CINEMATIC -->
+    <section class="cinematic">
+      <img class="reveal" src="https://images.unsplash.com/photo-1507504031003-b417219a0fde?auto=format&fit=crop&w=1900&q=90" alt="Cinematic wedding portrait">
+      <div class="cinematic-card reveal reveal-delay">
+        <div class="eyebrow">Forever / 2026</div>
+        <blockquote>“There was never another choice.”</blockquote>
+      </div>
+    </section>
+
+    <!-- FORMAL INVITATION -->
+    <section class="section formal" id="invitation">
+      <div class="container">
+        <div class="eyebrow eyebrow-center reveal">With joy in our hearts</div>
+        <div class="names reveal">Philip<br><em>&amp;</em><br>Ednalyn</div>
+        <p class="formal-copy reveal">invite you to celebrate the beginning of their marriage and the next chapter of a story already filled with love.</p>
+
+        <div class="date-lockup reveal">
+          <div class="num">17</div>
+          <div class="mid">October<br>Saturday</div>
+          <div class="num">26</div>
+        </div>
+
+        <div class="formal-meta reveal">
+          Four o’clock in the afternoon<br>
+          <strong>St. Andrew Parish Church</strong><br>
+          Norzagaray,Bulacan<br><br>
+          Reception to follow<br>
+        </div>
+      </div>
+    </section>
+
+    <!-- COUNTDOWN -->
+    <section class="section-tight">
+      <div class="container">
+        <div class="eyebrow eyebrow-center eyebrow-full reveal">Until Forever</div>
+        <div class="countdown reveal" aria-live="polite">
+          <div class="count-item"><strong id="days">000</strong><span>Days</span></div>
+          <div class="count-item"><strong id="hours">00</strong><span>Hours</span></div>
+          <div class="count-item"><strong id="minutes">00</strong><span>Minutes</span></div>
+          <div class="count-item"><strong id="seconds">00</strong><span>Seconds</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- THE DAY -->
+    <section class="section" id="day">
+      <div class="container">
+        <div class="details-head">
+          <div>
+            <div class="eyebrow reveal">03 / The Day</div>
+            <h2 class="display reveal">Where forever<br>begins.</h2>
+          </div>
+          <p class="reveal">Everything you need for the day, kept simple so you can focus on being there with us.</p>
+        </div>
+
+        <div class="venue-row reveal">
+          <article class="venue">
+            <div class="num">01</div>
+            <div class="venue-time">04:00 PM</div>
+            <h3>The Ceremony</h3>
+            <p><strong>St. Andrew Parish Church</strong><br>Angat, Bulacan</p>
+            <p class="muted">Please arrive at least 30 minutes before the ceremony begins.</p>
+            <a class="text-link" href="https://www.google.com/maps?q=14.910136646232472,121.04915226729541" target="_blank" rel="noopener">View Location <span>↗</span></a>
+          </article>
+
+          <article class="venue">
+            <div class="num">02</div>
+            <div class="venue-time">06:00 PM</div>
+            <h3>The Reception</h3>
+            <p><strong>RCA Angat</strong><br>Angat, Bulacan</p>
+            <p class="muted">Cocktails begin shortly after the ceremony, followed by dinner and dancing.</p>
+            <a class="text-link" href="https://www.google.com/maps?q=14.95051327341173,121.02348693846017" target="_blank" rel="noopener">View Location <span>↗</span></a>
+          </article>
+        </div>
+
+        <div class="timeline reveal">
+          <div class="time"><strong>3:30</strong><span>Arrival</span></div>
+          <div class="time"><strong>4:00</strong><span>Ceremony</span></div>
+          <div class="time"><strong>5:30</strong><span>Cocktails</span></div>
+          <div class="time"><strong>6:30</strong><span>Reception</span></div>
+          <div class="time"><strong>7:30</strong><span>Dinner</span></div>
+          <div class="time"><strong>9:00</strong><span>Dancing</span></div>
+          <div class="time"><strong>12:00</strong><span>Goodnight</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ENTOURAGE -->
+    <section class="section" id="people">
+      <div class="container">
+        <div class="people-head">
+          <div>
+            <div class="eyebrow reveal">04 / Our People</div>
+            <h2 class="display reveal">The ones<br>beside us.</h2>
+          </div>
+          <p class="reveal">The people who have shaped our story, stood beside us, and will share the aisle with us.</p>
+        </div>
+
+        <div class="people-grid reveal">
+          <div class="people-group">
+            <div class="people-role">Parents of the Bride</div>
+            <div class="people-names">Maria &amp; Jose Santos</div>
+          </div>
+          <div class="people-group">
+            <div class="people-role">Parents of the Groom</div>
+            <div class="people-names">Elena &amp; Rafael Cruz</div>
+          </div>
+          <div class="people-group">
+            <div class="people-role">Maid of Honor</div>
+            <div class="people-names">Isabella Santos</div>
+          </div>
+          <div class="people-group">
+            <div class="people-role">Best Man</div>
+            <div class="people-names">Gabriel Cruz</div>
+          </div>
+          <div class="people-group">
+            <div class="people-role">Bridesmaids</div>
+            <div class="people-names">Sofia Reyes<br>Bianca Lim<br>Camille Tan</div>
+          </div>
+          <div class="people-group">
+            <div class="people-role">Groomsmen</div>
+            <div class="people-names">Daniel Reyes<br>Marco Lim<br>Paolo Tan</div>
+          </div>
+          <div class="people-group">
+            <div class="people-role">Principal Sponsors</div>
+            <div class="people-names">Name One · Name Two<br>Name Three · Name Four</div>
+          </div>
+          <div class="people-group">
+            <div class="people-role">Little Ones</div>
+            <div class="people-names">Flower Girls &amp; Ring Bearer</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PHOTO STRIP -->
+    <section class="section-tight">
+      <div class="container gallery-kicker-wrap">
+        <div class="eyebrow reveal">Our Favorite Moments / 05</div>
+      </div>
+      <div class="strip reveal">
+        <img src="https://images.unsplash.com/photo-1494955870715-979ca4f13bf0?auto=format&fit=crop&w=800&q=84" alt="">
+        <img src="https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=1000&q=84" alt="">
+        <img src="https://images.unsplash.com/photo-1478131143081-80f7f84ca84d?auto=format&fit=crop&w=800&q=84" alt="">
+        <img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1000&q=84" alt="">
+        <img src="https://images.unsplash.com/photo-1519741347686-c1e331c6a9f9?auto=format&fit=crop&w=800&q=84" alt="">
+      </div>
+    </section>
+
+    <!-- ATTIRE -->
+    <section class="section" id="attire">
+      <div class="container attire-layout">
+        <div>
+          <div class="eyebrow reveal">05 / Dress Code</div>
+          <h2 class="display attire-title reveal">Dress for<br>the moment.</h2>
+          <p class="muted reveal">Formal attire. Elegant, polished, and celebration-ready.</p>
+        </div>
+
+        <div>
+          <div class="attire-panel reveal">
+            <h3>For the Ladies</h3>
+            <p class="muted">Long formal dresses or elegant cocktail dresses in sophisticated, muted shades.</p>
+          </div>
+          <div class="attire-panel reveal">
+            <h3>For the Gentlemen</h3>
+            <p class="muted">Suit, coat and tie, or formal Barong Tagalog.</p>
+          </div>
+          <div class="attire-panel reveal">
+            <div class="people-role">Suggested Palette</div>
+            <div class="swatches">
+              <span class="swatch swatch-1"></span>
+              <span class="swatch swatch-2"></span>
+              <span class="swatch swatch-3"></span>
+              <span class="swatch swatch-4"></span>
+            </div>
+            <p class="attire-note">We kindly ask our guests to reserve <strong>white</strong> for the bride.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SPLIT -->
+    <section class="section">
+      <div class="container split-editorial">
+        <img class="reveal" src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=1200&q=86" alt="Wedding couple">
+        <div class="reveal reveal-delay">
+          <h2 class="display">You,<br>me,<br><span class="blue">always.</span></h2>
+          <div class="mini-date">29 · 09 · 26</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- GALLERY -->
+    <section class="section" id="gallery">
+      <div class="container">
+        <div class="gallery-head">
+          <div>
+            <div class="eyebrow reveal">06 / Our Memories</div>
+            <h2 class="display reveal">Moments<br>we keep.</h2>
+          </div>
+          <p class="reveal">A few frames from the story that brought us here.</p>
+        </div>
+
+        <div class="gallery" id="galleryGrid">
+          <button class="g1 reveal" data-full="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1800&q=92"><img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1000&q=84" alt="Wedding moment 1"></button>
+          <button class="g2 reveal" data-full="https://images.unsplash.com/photo-1523438885200-e635ba2c371e?auto=format&fit=crop&w=1800&q=92"><img src="https://images.unsplash.com/photo-1523438885200-e635ba2c371e?auto=format&fit=crop&w=1000&q=84" alt="Wedding moment 2"></button>
+          <button class="g3 reveal" data-full="https://images.unsplash.com/photo-1532712938310-34cb3982ef74?auto=format&fit=crop&w=1800&q=92"><img src="https://images.unsplash.com/photo-1532712938310-34cb3982ef74?auto=format&fit=crop&w=1000&q=84" alt="Wedding moment 3"></button>
+          <button class="g4 reveal" data-full="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1800&q=92"><img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1000&q=84" alt="Wedding moment 4"></button>
+          <button class="g5 reveal" data-full="https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=1800&q=92"><img src="https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=1200&q=84" alt="Wedding moment 5"></button>
+          <button class="g6 reveal" data-full="https://images.unsplash.com/photo-1494774157365-9e04c6720e47?auto=format&fit=crop&w=1800&q=92"><img src="https://images.unsplash.com/photo-1494774157365-9e04c6720e47?auto=format&fit=crop&w=1000&q=84" alt="Wedding moment 6"></button>
+        </div>
+      </div>
+    </section>
+
+    <!-- TYPE BREAK -->
+    <section class="type-break section">
+      <div class="container reveal">
+        <div class="micro">A New Chapter</div>
+        <h2 class="display">And so,<br>forever<br><span class="blue">begins.</span></h2>
+        <div class="micro">P + E &nbsp;&nbsp; 17 / 10 / 26</div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="section" id="notes">
+      <div class="container faq-layout">
+        <div>
+          <div class="eyebrow reveal">07 / Before The Day</div>
+          <h2 class="display faq-title reveal">A few<br>little notes.</h2>
+        </div>
+
+        <div class="accordion reveal" id="accordion">
+          <div class="faq-item">
+            <button class="faq-q"><span>What should I wear?</span><span>+</span></button>
+            <div class="faq-a"><p>Formal attire. Ladies may wear long formal dresses or refined cocktail dresses. Gentlemen may wear a suit, coat and tie, or formal Barong Tagalog.</p></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-q"><span>Can I bring a plus one?</span><span>+</span></button>
+            <div class="faq-a"><p>We have reserved seats for the names indicated on your invitation. If a plus one is included, it will be reflected there.</p></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-q"><span>Are children invited?</span><span>+</span></button>
+            <div class="faq-a"><p>Unless specifically named on the invitation, we kindly ask that this celebration remain an adults-only event.</p></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-q"><span>Can we take photos?</span><span>+</span></button>
+            <div class="faq-a"><p>We invite you to enjoy an unplugged ceremony. Once the reception begins, take as many photos as you like.</p></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-q"><span>Where can I park?</span><span>+</span></button>
+            <div class="faq-a"><p>Parking options are available near both venues. We recommend arriving early to allow time for parking and walking to the ceremony.</p></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-q"><span>What time should I arrive?</span><span>+</span></button>
+            <div class="faq-a"><p>Please arrive by 3:30 PM. The ceremony begins promptly at 4:00 PM.</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- UNPLUGGED -->
+    <section class="section-tight">
+      <div class="container unplugged reveal">
+        <div class="camera" aria-hidden="true"></div>
+        <h2 class="display">Be here<br>with us.</h2>
+        <p>We would love to see your faces, not your screens. Please enjoy an unplugged ceremony and save your photos for the celebration afterward.</p>
+      </div>
+    </section>
+
+    <!-- RSVP -->
+    <section class="section" id="rsvp">
+      <div class="container rsvp">
+        <div>
+          <div class="eyebrow reveal">08 / RSVP</div>
+          <h2 class="display reveal">Will you<br>be there?</h2>
+          <p class="reveal">We would be honored to celebrate with you. Kindly respond on or before October 10, 2026.</p>
+        </div>
+
+        <form id="rsvpForm" class="reveal">
+          <div class="form-row">
+            <label for="fullName">Full Name</label>
+            <input id="fullName" name="fullName" required autocomplete="name">
+          </div>
+
+          <div class="form-row">
+            <label for="contact">Email / Contact Number</label>
+            <input id="contact" name="contact" required>
+          </div>
+
+          <div class="form-row">
+            <label>Will you be attending?</label>
+            <div class="radio-row">
+              <label><input type="radio" name="attendance" value="accepts" required> Joyfully Accepts</label>
+              <label><input type="radio" name="attendance" value="declines" required> Regretfully Declines</label>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <label for="guests">Number of Guests</label>
+            <select id="guests" name="guests">
+              <option value="1">1 Guest</option>
+              <option value="2">2 Guests</option>
+              <option value="3">3 Guests</option>
+              <option value="4">4 Guests</option>
+            </select>
+          </div>
+
+          <div class="form-row">
+            <label for="message">Message for the Couple</label>
+            <textarea id="message" name="message" rows="4"></textarea>
+          </div>
+
+          <button class="btn btn-solid" type="submit">Send Our RSVP <span>→</span></button>
+          <div class="form-status" id="formStatus" role="status"></div>
+        </form>
+      </div>
+    </section>
+
+    <!-- FINAL -->
+    <section class="finale">
+      <div class="finale-inner">
+        <h2 class="finale-title reveal">Philip <span class="blue">&amp;</span><br>Ednalyn</h2>
+        <img class="reveal" src="https://images.unsplash.com/photo-1507504031003-b417219a0fde?auto=format&fit=crop&w=1800&q=90" alt="Philip and Ednalyn">
+        <div class="finale-side">See you · 10.17.26</div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-monogram">P&amp;E</div>
+    <div class="footer-title">Philip &amp; Ednalyn</div>
+    <div class="footer-meta">October 17, 2026 · Angat, Bulacan</div>
+    <div class="footer-love">Made with love</div>
+  </footer>
+
+  <!-- LIGHTBOX -->
+  <div class="lightbox" id="lightbox" aria-hidden="true">
+    <button class="lightbox-close" id="lightboxClose" aria-label="Close gallery">×</button>
+    <img id="lightboxImage" alt="Expanded gallery photo">
+  </div>
+  <script src="script.js" defer></script>
+</body>
+</html>
