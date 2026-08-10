@@ -558,9 +558,11 @@ footer{text-align:center;padding:110px var(--side) 55px;border-top:1px solid rgb
   }
 
   .cn-item{
-    width:48px;
-    height:48px;
-    font-size:.50rem;
+    width:62px;
+    height:52px;
+    padding:0 5px;
+    font-size:.46rem;
+    letter-spacing:.05em;
   }
 
   .cn-item:nth-child(1){
