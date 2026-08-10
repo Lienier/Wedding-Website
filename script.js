@@ -41,59 +41,17 @@ if(wishesFrame){
 function closeMenu(){
   menuBtn.classList.remove("active");
   mobilePanel.classList.remove("open");
-  mobilePanel.setAttribute("aria-hidden","true");
   menuBtn.setAttribute("aria-expanded","false");
 }
 
 menuBtn.addEventListener("click", () => {
   const isOpen = mobilePanel.classList.toggle("open");
   menuBtn.classList.toggle("active", isOpen);
-  mobilePanel.setAttribute("aria-hidden", String(!isOpen));
   menuBtn.setAttribute("aria-expanded", String(isOpen));
 });
 
 mobilePanel.querySelectorAll("a").forEach(a => {
   a.addEventListener("click", closeMenu);
-});
-
-// HIDE/SHOW CIRCLE NAV ON SCROLL + TAP
-let scrollTimer = null;
-let isHidden = false;
-let lastScrollY = window.scrollY;
-
-function hideNav(){
-  if(isHidden) return;
-  isHidden = true;
-  closeMenu();
-  menuBtn.classList.add("nav-hidden");
-}
-
-function showNav(){
-  if(!isHidden) return;
-  isHidden = false;
-  menuBtn.classList.remove("nav-hidden");
-}
-
-window.addEventListener("scroll", () => {
-  const y = window.scrollY;
-  // ignore iOS rubber-band overscroll (y < 0 or beyond page)
-  if(y < 0 || y > document.body.scrollHeight - window.innerHeight + 1) return;
-  if(Math.abs(y - lastScrollY) < 4) return; // ignore tiny jitter
-  lastScrollY = y;
-  hideNav();
-  clearTimeout(scrollTimer);
-}, { passive: true });
-
-document.addEventListener("touchstart", () => {
-  showNav();
-  clearTimeout(scrollTimer);
-  scrollTimer = setTimeout(hideNav, 3000);
-}, { passive: true });
-
-document.addEventListener("click", () => {
-  showNav();
-  clearTimeout(scrollTimer);
-  scrollTimer = setTimeout(hideNav, 3000);
 });
 
 // COUNTDOWN
