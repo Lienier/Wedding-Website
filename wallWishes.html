@@ -1,0 +1,1673 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="theme-color" content="#ffffff">
+<title>Wall of Wishes — Styled Board Test</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=Manrope:wght@300;400;500;600&family=Patrick+Hand&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-config.js"></script>
+
+<style>
+:root{
+  --blue:#2146A5;
+  --ink:#171717;
+  --muted:#737373;
+  --line:rgba(33,70,165,.18);
+  --serif:"Cormorant Garamond", Georgia, serif;
+  --sans:"Manrope", Arial, sans-serif;
+  --hand:"Patrick Hand","Comic Sans MS", cursive;
+
+  --wood1:#926236;
+  --wood2:#7d522b;
+  --wood3:#6d4522;
+  --cork1:#c99b69;
+  --cork2:#b88657;
+  --cork3:#d8b185;
+}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  background:#fff;
+  color:var(--ink);
+  font-family:var(--sans);
+}
+button,input,textarea,select{font:inherit}
+button{cursor:pointer}
+::selection{background:var(--blue);color:#fff}
+
+.shell{
+  width:min(1400px,calc(100% - 42px));
+  margin:auto;
+}
+
+/* HEADER */
+.topbar{
+  position:sticky;
+  top:0;
+  z-index:1000;
+  background:rgba(255,255,255,.92);
+  backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--line);
+}
+.topbar-inner{
+  min-height:70px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:18px;
+}
+.brand{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+.mark{
+  width:40px;
+  height:40px;
+  border:1px solid var(--blue);
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  color:var(--blue);
+  font-family:var(--serif);
+  font-size:1.25rem;
+}
+.brand strong{
+  display:block;
+  font-family:var(--serif);
+  font-size:1.3rem;
+  font-weight:400;
+  line-height:1;
+}
+.brand small{
+  color:var(--blue);
+  text-transform:uppercase;
+  letter-spacing:.16em;
+  font-size:.56rem;
+}
+.top-actions{
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+.count{
+  border:1px solid var(--line);
+  padding:9px 12px;
+  color:var(--muted);
+  font-size:.62rem;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+}
+.primary{
+  border:1px solid var(--blue);
+  background:var(--blue);
+  color:#fff;
+  padding:11px 14px;
+  font-size:.62rem;
+  text-transform:uppercase;
+  letter-spacing:.11em;
+  transition:.25s;
+}
+.primary:hover{
+  background:#fff;
+  color:var(--blue);
+}
+
+/* HERO */
+.hero{
+  display:grid;
+  grid-template-columns:1.1fr .9fr;
+  gap:70px;
+  align-items:end;
+  padding:86px 0 52px;
+}
+.kicker{
+  color:var(--blue);
+  font-size:.62rem;
+  text-transform:uppercase;
+  letter-spacing:.2em;
+  display:flex;
+  align-items:center;
+  gap:12px;
+  margin-bottom:20px;
+}
+.kicker::before{
+  content:"";
+  width:35px;
+  height:1px;
+  background:var(--blue);
+}
+.hero h1{
+  font-family:var(--serif);
+  font-weight:400;
+  letter-spacing:-.05em;
+  line-height:.82;
+  font-size:clamp(4.8rem,10vw,9rem);
+  margin:0;
+}
+.hero h1 em{
+  color:var(--blue);
+  font-weight:400;
+}
+.hero-copy{
+  justify-self:end;
+  max-width:480px;
+  color:var(--muted);
+  font-family:var(--serif);
+  font-size:1.35rem;
+  line-height:1.38;
+}
+.hero-copy small{
+  display:block;
+  margin-top:24px;
+  color:var(--blue);
+  font-family:var(--sans);
+  font-size:.58rem;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+}
+
+/* TOOLBAR */
+.toolbar{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:20px;
+  padding:18px 0;
+  border-top:1px solid var(--line);
+  border-bottom:1px solid var(--line);
+  margin-bottom:18px;
+}
+.filters{
+  display:flex;
+  gap:7px;
+  flex-wrap:wrap;
+}
+.filter{
+  border:1px solid var(--line);
+  background:#fff;
+  color:var(--muted);
+  padding:8px 12px;
+  font-size:.58rem;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+}
+.filter.active,.filter:hover{
+  background:var(--blue);
+  color:#fff;
+  border-color:var(--blue);
+}
+.hint{
+  font-size:.68rem;
+  color:var(--muted);
+}
+
+/* BOARD */
+.board-wrap{
+  position:relative;
+  padding-bottom:120px;
+}
+.board-title-row{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:18px;
+  margin-bottom:12px;
+}
+.board-instruction{
+  color:var(--blue);
+  font-size:.56rem;
+  text-transform:uppercase;
+  letter-spacing:.15em;
+}
+.board-viewport{
+  position:relative;
+  width:100%;
+  height:780px;
+  overflow:hidden;
+  touch-action:none;
+  border:16px solid transparent;
+  border-image:linear-gradient(135deg,var(--wood1),var(--wood2) 45%,var(--wood3) 100%) 1;
+  box-shadow:
+    inset 0 0 0 1px rgba(79,49,22,.4),
+    inset 0 0 18px rgba(0,0,0,.12),
+    0 18px 52px rgba(33,32,28,.16);
+  background:
+    linear-gradient(135deg, rgba(255,255,255,.04), rgba(0,0,0,.05));
+}
+.board-viewport::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  box-shadow:
+    inset 0 0 0 2px rgba(255,255,255,.06),
+    inset 0 0 40px rgba(0,0,0,.14);
+  z-index:2;
+}
+.board-surface{
+  position:absolute;
+  left:0;
+  top:0;
+  width:1200px;
+  height:900px;
+  transform-origin:0 0;
+  background:
+    radial-gradient(circle at 4px 4px, rgba(255,255,255,.16) 0 2px, transparent 2.4px) 0 0/26px 26px,
+    radial-gradient(circle at 10px 12px, rgba(107,70,37,.18) 0 2px, transparent 2.5px) 0 0/32px 32px,
+    radial-gradient(circle at 18px 7px, rgba(85,54,28,.15) 0 1.4px, transparent 1.8px) 0 0/22px 22px,
+    linear-gradient(180deg, rgba(255,255,255,.05), rgba(0,0,0,.03)),
+    linear-gradient(145deg, var(--cork3), var(--cork1) 50%, var(--cork2));
+}
+.board-surface::before{
+  content:"P & E / WALL OF WISHES";
+  position:absolute;
+  left:20px;
+  top:17px;
+  color:rgba(54,33,16,.58);
+  font-size:.54rem;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+}
+.board-surface::after{
+  content:"Leave a note anywhere";
+  position:absolute;
+  right:20px;
+  bottom:16px;
+  color:rgba(54,33,16,.58);
+  font-size:.54rem;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+}
+
+/* NOTES */
+.note{
+  --rot:0deg;
+  --bg:#fff;
+  position:absolute;
+  width:240px;
+  min-height:205px;
+  padding:31px 25px 24px;
+  background:
+    linear-gradient(135deg, rgba(255,255,255,.62), transparent 48%),
+    var(--bg);
+  border:1px solid rgba(40,40,40,.08);
+  box-shadow:
+    0 12px 28px rgba(56,36,18,.18),
+    0 2px 5px rgba(255,255,255,.28) inset;
+  transform:rotate(var(--rot));
+  cursor:grab;
+  touch-action:none;
+  user-select:none;
+  transition:box-shadow .2s,border-color .2s,opacity .2s,transform .2s;
+}
+.note:active{cursor:grabbing}
+.note.dragging{
+  box-shadow:
+    0 26px 60px rgba(43,29,16,.28),
+    0 2px 5px rgba(255,255,255,.24) inset;
+  border-color:rgba(33,70,165,.34);
+}
+.note:hover{
+  transform:rotate(var(--rot)) translateY(-2px);
+}
+
+/* sizes */
+.size-sm{width:205px;min-height:170px}
+.size-md{width:240px;min-height:205px}
+.size-lg{width:285px;min-height:230px}
+.size-tall{width:220px;min-height:255px}
+.size-wide{width:290px;min-height:190px}
+
+/* shapes */
+.shape-clean{border-radius:2px}
+.shape-soft{border-radius:14px}
+.shape-rounded{border-radius:20px 6px 18px 8px}
+.shape-ticket{
+  clip-path:polygon(12px 0, calc(100% - 12px) 0, 100% 12px, 100% calc(100% - 12px), calc(100% - 12px) 100%, 12px 100%, 0 calc(100% - 12px), 0 12px);
+}
+.shape-fold::after{
+  content:"";
+  position:absolute;
+  right:0;
+  top:0;
+  width:0;height:0;
+  border-top:26px solid rgba(0,0,0,.07);
+  border-left:26px solid transparent;
+}
+.shape-clip{
+  border-top:5px solid rgba(33,70,165,.14);
+}
+
+/* paper colors */
+.paper-white{--bg:#fff}
+.paper-cream{--bg:#fff8eb}
+.paper-blue{--bg:#eef4ff}
+.paper-blush{--bg:#fff1f3}
+.paper-sage{--bg:#eef7ee}
+.paper-butter{--bg:#fff8d9}
+.paper-lavender{--bg:#f4efff}
+.paper-mist{--bg:#eef2f8}
+
+/* decorations */
+.pin{
+  position:absolute;
+  left:50%;
+  top:12px;
+  transform:translateX(-50%);
+  width:9px;
+  height:9px;
+  border-radius:50%;
+  border:1px solid rgba(40,40,40,.12);
+  background:
+    radial-gradient(circle at 30% 30%, #fff 0 20%, transparent 21%),
+    radial-gradient(circle at 35% 35%, #5f8dff 0 45%, #2f5ed1 46% 100%);
+  box-shadow:0 2px 4px rgba(0,0,0,.18);
+}
+.tape{
+  position:absolute;
+  top:-6px;
+  width:42px;
+  height:18px;
+  background:linear-gradient(180deg, rgba(255,255,255,.54), rgba(255,255,255,.26));
+  border:1px solid rgba(120,120,120,.12);
+  backdrop-filter:blur(1px);
+  transform:rotate(-4deg);
+  box-shadow:0 2px 5px rgba(0,0,0,.05);
+  display:none;
+}
+.tape.left{left:18px}
+.tape.right{right:18px;transform:rotate(5deg)}
+.paperclip{
+  position:absolute;
+  right:18px;
+  top:-8px;
+  width:16px;
+  height:30px;
+  border:2px solid rgba(64,86,145,.64);
+  border-radius:10px 10px 0 0;
+  border-bottom:0;
+  transform:rotate(10deg);
+  display:none;
+}
+.paperclip::after{
+  content:"";
+  position:absolute;
+  inset:4px 4px auto auto;
+  width:8px;
+  height:18px;
+  border:2px solid rgba(64,86,145,.64);
+  border-radius:8px 8px 0 0;
+  border-bottom:0;
+  right:2px;
+  top:3px;
+}
+
+.decor-pin .pin{display:block}
+.decor-tape .pin{display:none}
+.decor-tape .tape{display:block}
+.decor-clip .pin{display:none}
+.decor-clip .paperclip{display:block}
+
+.note-type{
+  color:var(--blue);
+  font-size:.54rem;
+  letter-spacing:.15em;
+  text-transform:uppercase;
+  margin-bottom:18px;
+}
+.note-preview{
+  font-family:var(--hand);
+  font-size:1.45rem;
+  line-height:1.08;
+  margin:0 0 22px;
+  display:-webkit-box;
+  -webkit-line-clamp:5;
+  -webkit-box-orient:vertical;
+  overflow:hidden;
+}
+.note-name{
+  font-family:var(--serif);
+  font-size:1.1rem;
+}
+.note-relation{
+  color:rgba(23,23,23,.62);
+  font-size:.5rem;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+  margin-top:2px;
+}
+.like{
+  position:absolute;
+  right:12px;
+  bottom:11px;
+  border:0;
+  background:rgba(255,255,255,.82);
+  color:var(--blue);
+  padding:5px 7px;
+  font-size:.64rem;
+  border-radius:999px;
+  box-shadow:0 4px 12px rgba(0,0,0,.08);
+}
+
+/* BOARD CONTROLS */
+.board-tools{
+  position:absolute;
+  right:14px;
+  bottom:18px;
+  z-index:35;
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+}
+.tool{
+  width:44px;
+  height:44px;
+  border:1px solid rgba(0,0,0,.08);
+  background:rgba(255,255,255,.95);
+  color:var(--blue);
+  display:grid;
+  place-items:center;
+  font-size:1.1rem;
+  border-radius:12px;
+  box-shadow:0 7px 20px rgba(23,35,75,.08);
+}
+.zoom-label{
+  border:1px solid rgba(0,0,0,.08);
+  background:#fff;
+  padding:6px 7px;
+  color:var(--blue);
+  font-size:.48rem;
+  text-align:center;
+  border-radius:10px;
+  box-shadow:0 7px 20px rgba(23,35,75,.06);
+}
+
+/* PLACEMENT MODE */
+.place-overlay{
+  display:none;
+  position:absolute;
+  inset:0;
+  z-index:31;
+  pointer-events:none;
+  box-shadow:inset 0 0 0 2px rgba(33,70,165,.32);
+}
+.board-wrap.placing .place-overlay{
+  display:block;
+}
+.place-copy{
+  position:absolute;
+  left:50%;
+  top:14px;
+  transform:translateX(-50%);
+  background:var(--blue);
+  color:#fff;
+  padding:8px 12px;
+  font-size:.52rem;
+  letter-spacing:.13em;
+  text-transform:uppercase;
+  white-space:nowrap;
+  border-radius:999px;
+  box-shadow:0 8px 24px rgba(33,70,165,.24);
+}
+.board-wrap.placing .note:not(.placing-note){
+  opacity:.46;
+}
+.board-wrap.placing .placing-note{
+  border-color:rgba(33,70,165,.44);
+  box-shadow:
+    0 28px 65px rgba(33,70,165,.22),
+    0 2px 5px rgba(255,255,255,.24) inset;
+}
+.place-bar{
+  display:none;
+  position:absolute;
+  left:14px;
+  right:74px;
+  bottom:18px;
+  z-index:50;
+  padding:12px;
+  background:rgba(255,255,255,.97);
+  backdrop-filter:blur(12px);
+  border:1px solid rgba(0,0,0,.08);
+  border-radius:16px;
+  grid-template-columns:1fr auto;
+  gap:10px;
+  align-items:center;
+  box-shadow:0 15px 40px rgba(23,35,75,.13);
+}
+.board-wrap.placing .place-bar{
+  display:grid;
+}
+.board-wrap.placing .board-tools{
+  bottom:98px;
+}
+.place-bar strong{
+  display:block;
+  font-family:var(--serif);
+  font-size:1.08rem;
+  font-weight:400;
+}
+.place-bar small{
+  display:block;
+  color:var(--muted);
+  font-size:.56rem;
+  margin-top:2px;
+}
+.pin-btn{
+  border:1px solid var(--blue);
+  background:var(--blue);
+  color:#fff;
+  padding:12px 15px;
+  text-transform:uppercase;
+  letter-spacing:.09em;
+  font-size:.54rem;
+  border-radius:12px;
+}
+
+/* READER */
+.reader{
+  position:fixed;
+  inset:0;
+  z-index:5000;
+  background:rgba(12,19,43,.24);
+  backdrop-filter:blur(9px);
+  display:grid;
+  place-items:center;
+  padding:20px;
+  opacity:0;
+  visibility:hidden;
+  transition:.25s;
+}
+.reader.open{
+  opacity:1;
+  visibility:visible;
+}
+.reader-card{
+  width:min(430px,100%);
+  background:#fff;
+  border:1px solid var(--line);
+  padding:32px 27px 26px;
+  position:relative;
+  box-shadow:0 28px 80px rgba(23,35,75,.18);
+  border-radius:18px;
+}
+.reader-close{
+  position:absolute;
+  right:13px;
+  top:11px;
+  width:34px;
+  height:34px;
+  border:0;
+  background:none;
+  color:var(--blue);
+  font-size:1.5rem;
+}
+.reader-type{
+  color:var(--blue);
+  font-size:.54rem;
+  letter-spacing:.15em;
+  text-transform:uppercase;
+  margin-bottom:22px;
+}
+.reader-message{
+  font-family:var(--hand);
+  font-size:1.9rem;
+  line-height:1.1;
+  margin:0 0 27px;
+}
+.reader-name{
+  font-family:var(--serif);
+  font-size:1.4rem;
+}
+.reader-rel{
+  color:var(--muted);
+  font-size:.58rem;
+  letter-spacing:.11em;
+  text-transform:uppercase;
+  margin-top:3px;
+}
+.reader-bottom{
+  display:flex;
+  justify-content:space-between;
+  align-items:end;
+  gap:18px;
+}
+
+/* FORM */
+.modal{
+  position:fixed;
+  inset:0;
+  z-index:6000;
+  background:rgba(12,19,43,.26);
+  backdrop-filter:blur(9px);
+  display:grid;
+  place-items:center;
+  padding:20px;
+  opacity:0;
+  visibility:hidden;
+  transition:.25s;
+}
+.modal.open{
+  opacity:1;
+  visibility:visible;
+}
+.modal-card{
+  width:min(700px,100%);
+  max-height:92vh;
+  overflow:auto;
+  background:#fff;
+  border:1px solid var(--line);
+  box-shadow:0 30px 85px rgba(23,35,75,.19);
+  border-radius:18px;
+}
+.modal-head{
+  display:flex;
+  align-items:start;
+  justify-content:space-between;
+  gap:20px;
+  padding:25px 27px;
+  border-bottom:1px solid var(--line);
+}
+.modal-head small{
+  color:var(--blue);
+  letter-spacing:.15em;
+  text-transform:uppercase;
+  font-size:.54rem;
+}
+.modal-head h2{
+  font-family:var(--serif);
+  font-weight:400;
+  font-size:2.5rem;
+  margin:7px 0 0;
+  line-height:1;
+}
+.close-modal{
+  border:0;
+  background:none;
+  color:var(--blue);
+  font-size:1.6rem;
+}
+.form{
+  padding:27px;
+}
+.form-row{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:22px;
+}
+.field{
+  margin-bottom:20px;
+}
+.field label{
+  display:block;
+  color:var(--blue);
+  font-size:.54rem;
+  letter-spacing:.13em;
+  text-transform:uppercase;
+  margin-bottom:7px;
+}
+.field input,.field textarea,.field select{
+  width:100%;
+  border:0;
+  border-bottom:1px solid var(--line);
+  background:transparent;
+  border-radius:0;
+  outline:none;
+  padding:10px 0;
+  color:var(--ink);
+}
+.field input:focus,.field textarea:focus,.field select:focus{
+  border-bottom-color:var(--blue);
+}
+.field textarea{
+  min-height:120px;
+  resize:vertical;
+}
+.char{
+  font-size:.55rem;
+  color:var(--muted);
+  text-align:right;
+  margin-top:4px;
+}
+.form-actions{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:18px;
+  margin-top:28px;
+}
+.form-note{
+  max-width:340px;
+  color:var(--muted);
+  font-size:.62rem;
+}
+.submit{
+  border:1px solid var(--blue);
+  background:var(--blue);
+  color:#fff;
+  padding:13px 17px;
+  text-transform:uppercase;
+  letter-spacing:.1em;
+  font-size:.56rem;
+  border-radius:12px;
+}
+
+.toast{
+  position:fixed;
+  left:50%;
+  bottom:24px;
+  z-index:7000;
+  transform:translate(-50%,30px);
+  opacity:0;
+  background:var(--blue);
+  color:#fff;
+  padding:11px 15px;
+  font-size:.62rem;
+  letter-spacing:.07em;
+  transition:.25s;
+  white-space:nowrap;
+  border-radius:999px;
+  box-shadow:0 10px 24px rgba(33,70,165,.22);
+}
+.toast.show{
+  opacity:1;
+  transform:translate(-50%,0);
+}
+
+/* FOOTER */
+footer{
+  border-top:1px solid var(--line);
+  padding:65px 20px 44px;
+  text-align:center;
+}
+.footer-mark{
+  font-family:var(--serif);
+  font-size:3.5rem;
+  color:var(--blue);
+}
+footer p{
+  font-family:var(--serif);
+  font-size:1.25rem;
+  margin:10px 0 6px;
+}
+footer small{
+  color:var(--muted);
+  font-size:.54rem;
+  letter-spacing:.15em;
+  text-transform:uppercase;
+}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  .hero{
+    grid-template-columns:1fr;
+    gap:26px;
+  }
+  .hero-copy{
+    justify-self:start;
+  }
+}
+
+@media(max-width:700px){
+  .shell{
+    width:min(100% - 28px,1400px);
+  }
+  .topbar-inner{
+    min-height:64px;
+  }
+  .brand small,.count{
+    display:none;
+  }
+  .brand strong{
+    font-size:1.08rem;
+  }
+  .hero{
+    padding:55px 0 34px;
+  }
+  .hero h1{
+    font-size:clamp(4.4rem,22vw,6.4rem);
+  }
+  .hero-copy{
+    font-size:1.12rem;
+  }
+  .toolbar{
+    align-items:flex-start;
+    flex-direction:column;
+    margin-bottom:12px;
+  }
+  .hint{
+    font-size:.62rem;
+  }
+  .board-wrap{
+    padding-bottom:90px;
+  }
+  .board-title-row{
+    align-items:flex-start;
+    flex-direction:column;
+    gap:5px;
+  }
+  .board-viewport{
+    height:620px;
+    border-width:12px;
+  }
+  .board-surface{
+    width:1100px;
+    height:980px;
+  }
+
+  .size-sm{width:150px;min-height:128px}
+  .size-md{width:172px;min-height:150px}
+  .size-lg{width:190px;min-height:166px}
+  .size-tall{width:158px;min-height:185px}
+  .size-wide{width:192px;min-height:142px}
+
+  .note{
+    padding:25px 17px 18px;
+  }
+  .note-preview{
+    font-size:1.12rem;
+    -webkit-line-clamp:4;
+    margin-bottom:16px;
+  }
+  .note-name{
+    font-size:.92rem;
+  }
+  .note-relation{
+    font-size:.43rem;
+  }
+  .note-type{
+    font-size:.45rem;
+    margin-bottom:13px;
+  }
+  .pin{
+    top:9px;
+    width:7px;
+    height:7px;
+  }
+  .like{
+    font-size:.52rem;
+    right:8px;
+    bottom:7px;
+  }
+  .paperclip{
+    top:-6px;
+    right:14px;
+    transform:rotate(10deg) scale(.86);
+  }
+  .tape{
+    width:34px;
+    height:14px;
+    top:-5px;
+  }
+  .board-tools{
+    right:10px;
+    bottom:12px;
+  }
+  .tool{
+    width:40px;
+    height:40px;
+  }
+  .place-bar{
+    left:10px;
+    right:10px;
+    bottom:10px;
+  }
+  .board-wrap.placing .board-tools{
+    bottom:92px;
+  }
+  .place-copy{
+    top:10px;
+  }
+  .form-row{
+    grid-template-columns:1fr;
+    gap:0;
+  }
+}
+
+@media(max-width:430px){
+  .board-viewport{
+    height:570px;
+  }
+  .filters{
+    gap:5px;
+  }
+  .filter{
+    padding:7px 9px;
+    font-size:.52rem;
+  }
+  .modal-card{
+    max-height:95vh;
+  }
+  .modal-head,.form{
+    padding:21px;
+  }
+  .form-actions{
+    align-items:stretch;
+    flex-direction:column;
+  }
+  .submit{
+    width:100%;
+  }
+  .place-bar{
+    grid-template-columns:1fr;
+  }
+  .pin-btn{
+    width:100%;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header class="topbar">
+  <div class="shell topbar-inner">
+    <div class="brand">
+      <div class="mark">P&amp;E</div>
+      <div>
+        <strong>Wall of Wishes</strong>
+        <small>Philip &amp; Ednalyn · 17.10.26</small>
+      </div>
+    </div>
+
+    <div class="top-actions">
+      <div class="count"><span id="noteCount">0</span> notes</div>
+      <button class="primary open-note-form">+ Leave a Note</button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="shell hero">
+    <div>
+      <div class="kicker">A little place for forever</div>
+      <h1>Words<br>we'll <em>keep.</em></h1>
+    </div>
+
+    <div class="hero-copy">
+      Leave Philip &amp; Ednalyn a message, prayer, memory, or piece of advice — then place your note wherever you want on their wall.
+      <small>Write it · Drag it · Stack it · Leave it here forever</small>
+    </div>
+  </section>
+
+  <section class="shell">
+    <div class="toolbar">
+      <div class="filters">
+        <button class="filter active" data-filter="all">All Notes</button>
+        <button class="filter" data-filter="Wish">Wishes</button>
+        <button class="filter" data-filter="Prayer">Prayers</button>
+        <button class="filter" data-filter="Advice">Advice</button>
+        <button class="filter" data-filter="Memory">Memories</button>
+      </div>
+
+      <div class="hint">
+        Mobile: drag empty board space to explore · drag notes to move · tap a note to read
+      </div>
+    </div>
+
+    <div class="board-wrap" id="boardWrap">
+      <div class="board-title-row">
+        <div class="board-instruction">A shared board for everyone who loves them.</div>
+        <div class="board-instruction">Different papers, colors, and notes layered together like a real keepsake board.</div>
+      </div>
+
+      <div class="board-viewport" id="boardViewport">
+        <div class="board-surface" id="boardSurface"></div>
+
+        <div class="board-tools">
+          <button class="tool" id="zoomIn" aria-label="Zoom in">+</button>
+          <div class="zoom-label" id="zoomLabel">100%</div>
+          <button class="tool" id="zoomOut" aria-label="Zoom out">−</button>
+          <button class="tool" id="centerBoard" aria-label="Center board">⌂</button>
+        </div>
+
+        <div class="place-overlay">
+          <div class="place-copy">Drag your note anywhere</div>
+        </div>
+
+        <div class="place-bar">
+          <div>
+            <strong>Happy with this spot?</strong>
+            <small>You can overlap other notes — the wall is yours.</small>
+          </div>
+          <button class="pin-btn" id="confirmPlacement">Pin It Here</button>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="footer-mark">P&amp;E</div>
+  <p>May these words stay with you for years to come.</p>
+  <small>October 17, 2026 · This was only the beginning</small>
+</footer>
+
+<!-- READER -->
+<div class="reader" id="reader" aria-hidden="true">
+  <article class="reader-card">
+    <button class="reader-close" id="readerClose" aria-label="Close note">×</button>
+    <div class="reader-type" id="readerType"></div>
+    <p class="reader-message" id="readerMessage"></p>
+    <div class="reader-bottom">
+      <div>
+        <div class="reader-name" id="readerName"></div>
+        <div class="reader-rel" id="readerRelation"></div>
+      </div>
+      <button class="like" id="readerLike">♡ <span id="readerLikes">0</span></button>
+    </div>
+  </article>
+</div>
+
+<!-- FORM -->
+<div class="modal" id="noteModal" aria-hidden="true">
+  <div class="modal-card">
+    <div class="modal-head">
+      <div>
+        <small>For Philip &amp; Ednalyn</small>
+        <h2>Leave a little note.</h2>
+      </div>
+      <button class="close-modal" id="closeModal" aria-label="Close">×</button>
+    </div>
+
+    <div class="form">
+      <div class="form-row">
+        <div class="field">
+          <label for="guestName">Your Name</label>
+          <input id="guestName" maxlength="40" placeholder="e.g. Maria Santos">
+        </div>
+        <div class="field">
+          <label for="relation">How do you know the couple? (optional)</label>
+          <input id="relation" maxlength="45" placeholder="e.g. College friend">
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="type">What kind of note is this?</label>
+        <select id="type">
+          <option>Wish</option>
+          <option>Prayer</option>
+          <option>Advice</option>
+          <option>Memory</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label for="message">Your Message</label>
+        <textarea id="message" maxlength="280" placeholder="Write something they'll want to read years from now..."></textarea>
+        <div class="char"><span id="charCount">0</span>/280</div>
+      </div>
+
+      <div class="form-actions">
+        <div class="form-note">
+          Test mode: notes, positions, likes, and stacking order are saved only in this browser.
+        </div>
+        <button class="submit" id="createNote">Create My Note →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const MOBILE_BREAKPOINT = 700;
+const DESKTOP_W = 1200;
+const DESKTOP_H = 900;
+const MOBILE_W = 1100;
+const MOBILE_H = 980;
+const STORAGE_KEY = "pe_wall_boardstyled_test_v1";
+const supabaseClient = window.getSupabaseClient?.();
+
+const papers = ["paper-white","paper-cream","paper-blue","paper-blush","paper-sage","paper-butter","paper-lavender","paper-mist"];
+const rotations = [-2.6,-1.8,-1.1,-.4,.7,1.3,2.1];
+const sizes = ["size-sm","size-md","size-lg","size-tall","size-wide"];
+const shapes = ["shape-clean","shape-soft","shape-rounded","shape-ticket","shape-fold","shape-clip"];
+const decors = ["decor-pin","decor-tape","decor-clip"];
+
+const starterNotes = [
+  {id:"s1",name:"Tita Maria",relation:"Family",type:"Prayer",
+   message:"May your home always be filled with grace, patience, laughter, and a love that keeps choosing each other.",
+   likes:18,liked:false,paper:"paper-blue",rot:-1.5,x:72,y:84,z:1,size:"size-lg",shape:"shape-soft",decor:"decor-pin"},
+  {id:"s2",name:"Paolo",relation:"Friend of the groom",type:"Advice",
+   message:"Keep choosing each other — especially on the ordinary days. Those are the days that build a lifetime.",
+   likes:24,liked:false,paper:"paper-cream",rot:1.1,x:340,y:156,z:2,size:"size-md",shape:"shape-clean",decor:"decor-tape"},
+  {id:"s3",name:"Camille",relation:"College friend",type:"Wish",
+   message:"May every year together feel less like counting time and more like collecting beautiful little moments.",
+   likes:13,liked:false,paper:"paper-blush",rot:-.9,x:620,y:78,z:3,size:"size-tall",shape:"shape-rounded",decor:"decor-clip"},
+  {id:"s4",name:"Isabella",relation:"Family",type:"Memory",
+   message:"From all the little stories before this day to the ones still waiting to be written — I’m so happy you found home in each other.",
+   likes:21,liked:false,paper:"paper-sage",rot:1.8,x:845,y:175,z:4,size:"size-wide",shape:"shape-ticket",decor:"decor-pin"},
+  {id:"s5",name:"Gabriel",relation:"Best friend",type:"Advice",
+   message:"Always be on the same team. Even when you disagree, remember the problem is the opponent — never each other.",
+   likes:30,liked:false,paper:"paper-white",rot:-1.2,x:170,y:525,z:5,size:"size-md",shape:"shape-fold",decor:"decor-clip"},
+  {id:"s6",name:"Anonymous",relation:"Wedding Guest",type:"Wish",
+   message:"To a love that feels calm, certain, and worth coming home to. Congratulations, Philip & Ednalyn.",
+   likes:11,liked:false,paper:"paper-butter",rot:.7,x:585,y:555,z:6,size:"size-sm",shape:"shape-soft",decor:"decor-tape"},
+  {id:"s7",name:"Mia",relation:"Friend of the bride",type:"Prayer",
+   message:"May God bless every season of your marriage and give you gentleness for the hard days and gratitude for the beautiful ones.",
+   likes:17,liked:false,paper:"paper-lavender",rot:1.4,x:818,y:608,z:7,size:"size-lg",shape:"shape-rounded",decor:"decor-pin"}
+];
+
+let stored = JSON.parse(localStorage.getItem(STORAGE_KEY) || "null");
+let notes = stored?.notes || starterNotes.map(n=>({...n}));
+let maxZ = stored?.maxZ || Math.max(...notes.map(n=>n.z),1);
+let currentFilter = "all";
+let activeReaderId = null;
+let pendingNoteId = null;
+
+let scale = 1;
+let panX = 0;
+let panY = 0;
+
+const boardWrap = document.getElementById("boardWrap");
+const viewport = document.getElementById("boardViewport");
+const surface = document.getElementById("boardSurface");
+
+const noteCount = document.getElementById("noteCount");
+const zoomLabel = document.getElementById("zoomLabel");
+
+const reader = document.getElementById("reader");
+const readerType = document.getElementById("readerType");
+const readerMessage = document.getElementById("readerMessage");
+const readerName = document.getElementById("readerName");
+const readerRelation = document.getElementById("readerRelation");
+const readerLike = document.getElementById("readerLike");
+const readerLikes = document.getElementById("readerLikes");
+
+const noteModal = document.getElementById("noteModal");
+const guestName = document.getElementById("guestName");
+const relation = document.getElementById("relation");
+const type = document.getElementById("type");
+const message = document.getElementById("message");
+const charCount = document.getElementById("charCount");
+const toast = document.getElementById("toast");
+
+function isMobile(){ return window.innerWidth <= MOBILE_BREAKPOINT; }
+function worldW(){ return isMobile() ? MOBILE_W : DESKTOP_W; }
+function worldH(){ return isMobile() ? MOBILE_H : DESKTOP_H; }
+
+function getNoteDims(note){
+  const map = isMobile()
+    ? {
+        "size-sm": {w:150,h:128},
+        "size-md": {w:172,h:150},
+        "size-lg": {w:190,h:166},
+        "size-tall": {w:158,h:185},
+        "size-wide": {w:192,h:142}
+      }
+    : {
+        "size-sm": {w:205,h:170},
+        "size-md": {w:240,h:205},
+        "size-lg": {w:285,h:230},
+        "size-tall": {w:220,h:255},
+        "size-wide": {w:290,h:190}
+      };
+  return map[note.size || "size-md"] || map["size-md"];
+}
+
+function save(){
+  localStorage.setItem(STORAGE_KEY, JSON.stringify({notes,maxZ}));
+  if(supabaseClient){
+    const rows = notes.map(n => ({
+      id:n.id, name:n.name, relation:n.relation || "", type:n.type,
+      message:n.message, likes:n.likes || 0, paper:n.paper, rot:n.rot,
+      size:n.size, shape:n.shape, decor:n.decor, x:n.x, y:n.y, z:n.z
+    }));
+    supabaseClient.from("wishes").upsert(rows, {onConflict:"id"}).then(({error}) => {
+      if(error) console.warn("Could not sync wishes:", error.message);
+    });
+  }
+}
+
+async function loadRemoteNotes(){
+  if(!supabaseClient) return;
+  const {data, error} = await supabaseClient
+    .from("wishes")
+    .select("id,name,relation,type,message,likes,paper,rot,size,shape,decor,x,y,z,created_at")
+    .order("created_at", {ascending:true});
+
+  if(error){
+    console.warn("Could not load wishes:", error.message);
+    return;
+  }
+
+  if(data?.length){
+    notes = data.map(n => ({...n, liked:false}));
+    maxZ = Math.max(...notes.map(n => n.z || 1), 1);
+    localStorage.setItem(STORAGE_KEY, JSON.stringify({notes,maxZ}));
+    render();
+    centerBoard();
+  }
+}
+
+function clamp(v,min,max){
+  return Math.max(min, Math.min(max, v));
+}
+
+function esc(str=""){
+  return String(str).replace(/[&<>"']/g,m=>({
+    "&":"&amp;",
+    "<":"&lt;",
+    ">":"&gt;",
+    '"':"&quot;",
+    "'":"&#039;"
+  })[m]);
+}
+
+function noteById(id){
+  return notes.find(n=>n.id===id);
+}
+
+function configureSurface(){
+  surface.style.width = worldW() + "px";
+  surface.style.height = worldH() + "px";
+}
+
+function noteHTML(n){
+  return `
+    <span class="pin"></span>
+    <span class="tape left"></span>
+    <span class="tape right"></span>
+    <span class="paperclip"></span>
+    <div class="note-type">${esc(n.type)}</div>
+    <p class="note-preview">${esc(n.message)}</p>
+    <div class="note-name">— ${esc(n.name)}</div>
+    <div class="note-relation">${esc(n.relation || "Wedding Guest")}</div>
+    <button class="like" aria-label="Like note">${n.liked ? "♥":"♡"} ${n.likes || 0}</button>
+  `;
+}
+
+function randomFrom(arr){
+  return arr[Math.floor(Math.random()*arr.length)];
+}
+
+function ensureNoteStyleFields(n){
+  if(!n.paper) n.paper = randomFrom(papers);
+  if(!n.rot) n.rot = randomFrom(rotations);
+  if(!n.size) n.size = randomFrom(sizes);
+  if(!n.shape) n.shape = randomFrom(shapes);
+  if(!n.decor) n.decor = randomFrom(decors);
+}
+
+function render(){
+  configureSurface();
+  surface.innerHTML = "";
+  noteCount.textContent = notes.length;
+
+  notes
+    .filter(n => currentFilter === "all" || n.type === currentFilter)
+    .forEach(n => {
+      ensureNoteStyleFields(n);
+
+      const el = document.createElement("article");
+      el.className = `note ${n.paper} ${n.size} ${n.shape} ${n.decor} ${n.id===pendingNoteId ? "placing-note":""}`;
+      el.dataset.id = n.id;
+      el.style.left = n.x + "px";
+      el.style.top = n.y + "px";
+      el.style.zIndex = n.z;
+      el.style.setProperty("--rot", (n.rot || 0) + "deg");
+      el.innerHTML = noteHTML(n);
+
+      const like = el.querySelector(".like");
+      like.addEventListener("pointerdown",e=>e.stopPropagation());
+      like.addEventListener("click",e=>{
+        e.stopPropagation();
+        toggleLike(n.id);
+      });
+
+      attachNoteDrag(el);
+      surface.appendChild(el);
+    });
+}
+
+function attachNoteDrag(el){
+  let dragging = false;
+  let moved = false;
+  let pid = null;
+  let sx = 0, sy = 0, startX = 0, startY = 0;
+
+  el.addEventListener("pointerdown", e => {
+    if(e.target.closest(".like")) return;
+    e.stopPropagation();
+
+    const n = noteById(el.dataset.id);
+    if(!n) return;
+
+    dragging = true;
+    moved = false;
+    pid = e.pointerId;
+    el.setPointerCapture(pid);
+
+    sx = e.clientX;
+    sy = e.clientY;
+    startX = n.x;
+    startY = n.y;
+
+    maxZ++;
+    n.z = maxZ;
+    el.style.zIndex = maxZ;
+    el.classList.add("dragging");
+    save();
+  });
+
+  el.addEventListener("pointermove", e => {
+    if(!dragging || e.pointerId !== pid) return;
+
+    const dx = e.clientX - sx;
+    const dy = e.clientY - sy;
+    if(Math.abs(dx) > 5 || Math.abs(dy) > 5) moved = true;
+
+    const n = noteById(el.dataset.id);
+    if(!n) return;
+
+    const dims = getNoteDims(n);
+    const nx = clamp(startX + dx/scale, 0, worldW() - dims.w);
+    const ny = clamp(startY + dy/scale, 0, worldH() - dims.h);
+
+    n.x = nx;
+    n.y = ny;
+
+    el.style.left = nx + "px";
+    el.style.top = ny + "px";
+  });
+
+  function finish(e){
+    if(!dragging || e.pointerId !== pid) return;
+
+    dragging = false;
+    el.classList.remove("dragging");
+    save();
+
+    if(!moved && !pendingNoteId){
+      openReader(el.dataset.id);
+    }
+  }
+
+  el.addEventListener("pointerup", finish);
+  el.addEventListener("pointercancel", finish);
+}
+
+/* Pan board on empty space */
+let panning = false;
+let panPid = null;
+let panSX = 0, panSY = 0, startPanX = 0, startPanY = 0;
+
+viewport.addEventListener("pointerdown", e => {
+  if(
+    e.target.closest(".note") ||
+    e.target.closest(".board-tools") ||
+    e.target.closest(".place-bar")
+  ) return;
+
+  if(pendingNoteId) return;
+
+  panning = true;
+  panPid = e.pointerId;
+  viewport.setPointerCapture(panPid);
+
+  panSX = e.clientX;
+  panSY = e.clientY;
+  startPanX = panX;
+  startPanY = panY;
+});
+
+viewport.addEventListener("pointermove", e => {
+  if(!panning || e.pointerId !== panPid) return;
+
+  panX = startPanX + (e.clientX - panSX);
+  panY = startPanY + (e.clientY - panSY);
+
+  applyTransform();
+});
+
+function stopPan(e){
+  if(!panning || e.pointerId !== panPid) return;
+  panning = false;
+}
+viewport.addEventListener("pointerup", stopPan);
+viewport.addEventListener("pointercancel", stopPan);
+
+function clampPan(){
+  const vw = viewport.clientWidth;
+  const vh = viewport.clientHeight;
+  const sw = worldW() * scale;
+  const sh = worldH() * scale;
+
+  if(sw <= vw) panX = (vw - sw)/2;
+  else panX = clamp(panX, vw - sw, 0);
+
+  if(sh <= vh) panY = (vh - sh)/2;
+  else panY = clamp(panY, vh - sh, 0);
+}
+
+function applyTransform(){
+  clampPan();
+  surface.style.transform = `translate3d(${panX}px,${panY}px,0) scale(${scale})`;
+  zoomLabel.textContent = Math.round(scale * 100) + "%";
+}
+
+function centerBoard(){
+  const vw = viewport.clientWidth;
+  const vh = viewport.clientHeight;
+
+  panX = (vw - worldW() * scale) / 2;
+  panY = (vh - worldH() * scale) / 2;
+
+  applyTransform();
+}
+
+function zoomTo(newScale){
+  const old = scale;
+  newScale = clamp(
+    newScale,
+    isMobile() ? .48 : .65,
+    isMobile() ? 1.15 : 1.05
+  );
+
+  const vw = viewport.clientWidth;
+  const vh = viewport.clientHeight;
+  const cx = vw / 2;
+  const cy = vh / 2;
+
+  const worldX = (cx - panX) / old;
+  const worldY = (cy - panY) / old;
+
+  scale = newScale;
+  panX = cx - worldX * scale;
+  panY = cy - worldY * scale;
+
+  applyTransform();
+}
+
+document.getElementById("zoomIn").addEventListener("click",()=>zoomTo(scale + .1));
+document.getElementById("zoomOut").addEventListener("click",()=>zoomTo(scale - .1));
+document.getElementById("centerBoard").addEventListener("click",centerBoard);
+
+/* Filters */
+document.querySelectorAll(".filter").forEach(btn=>{
+  btn.addEventListener("click",()=>{
+    document.querySelectorAll(".filter").forEach(b=>b.classList.remove("active"));
+    btn.classList.add("active");
+    currentFilter = btn.dataset.filter;
+    render();
+  });
+});
+
+/* Reader */
+function openReader(id){
+  const n = noteById(id);
+  if(!n) return;
+
+  activeReaderId = id;
+  readerType.textContent = n.type;
+  readerMessage.textContent = n.message;
+  readerName.textContent = "— " + n.name;
+  readerRelation.textContent = n.relation || "Wedding Guest";
+  readerLikes.textContent = n.likes || 0;
+  readerLike.firstChild.textContent = n.liked ? "♥ " : "♡ ";
+
+  reader.classList.add("open");
+  reader.setAttribute("aria-hidden","false");
+}
+
+function closeReader(){
+  reader.classList.remove("open");
+  reader.setAttribute("aria-hidden","true");
+  activeReaderId = null;
+}
+
+function toggleLike(id){
+  const n = noteById(id);
+  if(!n) return;
+
+  n.liked = !n.liked;
+  n.likes = (n.likes || 0) + (n.liked ? 1 : -1);
+
+  save();
+  render();
+
+  if(activeReaderId === id) openReader(id);
+}
+
+document.getElementById("readerClose").addEventListener("click",closeReader);
+reader.addEventListener("click",e=>{ if(e.target === reader) closeReader(); });
+readerLike.addEventListener("click",()=>{ if(activeReaderId) toggleLike(activeReaderId); });
+
+/* Form */
+document.querySelectorAll(".open-note-form").forEach(btn=>{
+  btn.addEventListener("click",()=>{
+    noteModal.classList.add("open");
+    noteModal.setAttribute("aria-hidden","false");
+    setTimeout(()=>guestName.focus(),100);
+  });
+});
+
+function closeForm(){
+  noteModal.classList.remove("open");
+  noteModal.setAttribute("aria-hidden","true");
+}
+document.getElementById("closeModal").addEventListener("click",closeForm);
+noteModal.addEventListener("click",e=>{ if(e.target === noteModal) closeForm(); });
+
+message.addEventListener("input",()=>{ charCount.textContent = message.value.length; });
+
+document.getElementById("createNote").addEventListener("click",()=>{
+  const name = guestName.value.trim();
+  const msg = message.value.trim();
+
+  if(!name){ guestName.focus(); return; }
+  if(!msg){ message.focus(); return; }
+
+  maxZ++;
+
+  const size = randomFrom(sizes);
+  const dims = getNoteDims({size});
+  const worldCenterX = (viewport.clientWidth/2 - panX) / scale;
+  const worldCenterY = (viewport.clientHeight/2 - panY) / scale;
+
+  const n = {
+    id:"u"+Date.now(),
+    name,
+    relation:relation.value.trim(),
+    type:type.value,
+    message:msg,
+    likes:0,
+    liked:false,
+    paper:randomFrom(papers),
+    rot:randomFrom(rotations),
+    size,
+    shape:randomFrom(shapes),
+    decor:randomFrom(decors),
+    x:clamp(worldCenterX - dims.w/2, 10, worldW() - dims.w - 10),
+    y:clamp(worldCenterY - dims.h/2, 10, worldH() - dims.h - 10),
+    z:maxZ
+  };
+
+  notes.push(n);
+  pendingNoteId = n.id;
+
+  save();
+
+  guestName.value = "";
+  relation.value = "";
+  message.value = "";
+  charCount.textContent = "0";
+
+  closeForm();
+
+  currentFilter = "all";
+  document.querySelectorAll(".filter").forEach(b=>{
+    b.classList.toggle("active", b.dataset.filter === "all");
+  });
+
+  boardWrap.classList.add("placing");
+  render();
+
+  setTimeout(()=>{
+    boardWrap.scrollIntoView({behavior:"smooth", block:"center"});
+  },120);
+});
+
+/* Confirm placement */
+document.getElementById("confirmPlacement").addEventListener("click",()=>{
+  if(!pendingNoteId) return;
+
+  pendingNoteId = null;
+  boardWrap.classList.remove("placing");
+
+  save();
+  render();
+
+  showToast("Your note is now part of their wall ♡");
+});
+
+/* Toast */
+function showToast(text){
+  toast.textContent = text;
+  toast.classList.add("show");
+  setTimeout(()=>toast.classList.remove("show"),2200);
+}
+
+/* Responsive default */
+function setResponsiveDefault(){
+  configureSurface();
+
+  if(isMobile()){
+    scale = .68;
+  }else{
+    scale = Math.min(1, viewport.clientWidth / DESKTOP_W);
+  }
+
+  centerBoard();
+  render();
+}
+
+window.addEventListener("resize",()=>{
+  configureSurface();
+  applyTransform();
+  render();
+});
+
+document.addEventListener("keydown",e=>{
+  if(e.key === "Escape"){
+    closeReader();
+    closeForm();
+  }
+});
+
+render();
+requestAnimationFrame(setResponsiveDefault);
+loadRemoteNotes();
+</script>
+
+</body>
+</html>

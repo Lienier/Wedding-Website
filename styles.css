@@ -132,6 +132,8 @@ a{text-decoration:none}
 .nav-links a::after{content:"";position:absolute;left:0;bottom:4px;width:100%;height:1px;background:var(--blue);transform:scaleX(0);transform-origin:left;transition:.3s var(--ease)}
 .nav-links a:hover::after{transform:scaleX(1)}
 .nav-date{color:var(--blue);letter-spacing:.14em;font-size:.7rem}
+.wishes{padding:0;background:#fff}
+.wishes-frame{display:block;width:100%;min-height:1000px;border:0}
 .menu-btn{display:none;width:56px;height:56px;border-radius:50%;border:1px solid var(--blue);background:#fff;position:fixed;bottom:calc(32px + env(safe-area-inset-bottom));left:50%;transform:translateX(-50%);z-index:1200;cursor:pointer;-webkit-tap-highlight-color:transparent;touch-action:manipulation;box-shadow:0 4px 20px rgba(33,70,165,.18);transition:background .3s var(--ease), opacity .4s var(--ease), transform .4s var(--ease)}
 .menu-btn.nav-hidden{opacity:0;transform:translateX(-50%) translateY(20px);pointer-events:none}
 .menu-btn span{position:absolute;left:16px;right:16px;height:1px;background:var(--blue);transition:.3s var(--ease)}
@@ -419,30 +421,36 @@ footer{text-align:center;padding:110px var(--side) 55px;border-top:1px solid rgb
 
 /* upper left */
 .cn-item:nth-child(2){
-  --x:-105px;
-  --y:-135px;
+  --x:-120px;
+  --y:-105px;
 }
 
 /* top left */
 .cn-item:nth-child(3){
-  --x:-38px;
-  --y:-185px;
+  --x:-75px;
+  --y:-165px;
+}
+
+/* top center */
+.cn-item:nth-child(4){
+  --x:0;
+  --y:-195px;
 }
 
 /* top right */
-.cn-item:nth-child(4){
-  --x:38px;
-  --y:-185px;
+.cn-item:nth-child(5){
+  --x:75px;
+  --y:-165px;
 }
 
 /* upper right */
-.cn-item:nth-child(5){
-  --x:105px;
-  --y:-135px;
+.cn-item:nth-child(6){
+  --x:120px;
+  --y:-105px;
 }
 
 /* far right */
-.cn-item:nth-child(6){
+.cn-item:nth-child(7){
   --x:145px;
   --y:-55px;
 }
@@ -480,10 +488,7 @@ footer{text-align:center;padding:110px var(--side) 55px;border-top:1px solid rgb
   .attire-layout,
   .split-editorial,
   .faq-layout,
-  .rsvp{
-    grid-template-columns:1fr;
-  }
-
+  .rsvp,
   .statement-copy{
     max-width:560px;
   }
@@ -522,6 +527,7 @@ footer{text-align:center;padding:110px var(--side) 55px;border-top:1px solid rgb
     flex-direction:column;
   }
 }
+
 
 @media (max-width:480px){
 

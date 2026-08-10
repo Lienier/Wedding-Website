@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#173783">
+<title>Philip & Ednalyn — 3 Page Personal Invitation</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Manrope:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --blue:#2146A5;
+  --blue2:#173783;
+  --deep:#10285E;
+  --ink:#17203a;
+  --ivory:#F8F5EE;
+  --cream:#EFE7D7;
+  --pale:#DCE5FF;
+  --line:rgba(248,245,238,.38);
+  --serif:"Cormorant Garamond",Georgia,serif;
+  --sans:"Manrope",Arial,sans-serif;
+}
+
+*{box-sizing:border-box}
+html{
+  scroll-behavior:smooth;
+  scroll-snap-type:y mandatory;
+}
+body{
+  margin:0;
+  font-family:var(--sans);
+  background:var(--deep);
+  color:var(--ivory);
+  overflow-x:hidden;
+}
+a{color:inherit;text-decoration:none}
+::selection{background:var(--ivory);color:var(--blue2)}
+
+/* ---------------------------
+   GLOBAL PAGE / SLIDE
+--------------------------- */
+.invite-page{
+  min-height:100svh;
+  position:relative;
+  overflow:hidden;
+  scroll-snap-align:start;
+  display:grid;
+  place-items:center;
+  padding:34px 22px;
+}
+
+.page-inner{
+  position:relative;
+  width:min(940px,100%);
+  min-height:calc(100svh - 68px);
+  display:grid;
+  place-items:center;
+  overflow:hidden;
+  isolation:isolate;
+}
+
+/* paper grain / dotted texture */
+.texture{
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  opacity:.45;
+  background:
+    radial-gradient(circle at 2px 2px,rgba(255,255,255,.16) 1px,transparent 1.2px) 0 0/18px 18px,
+    radial-gradient(circle at 8px 10px,rgba(16,40,94,.12) 1px,transparent 1.2px) 0 0/23px 23px;
+  mix-blend-mode:soft-light;
+}
+
+/* elegant nav dots */
+.page-nav{
+  position:fixed;
+  z-index:200;
+  right:18px;
+  top:50%;
+  transform:translateY(-50%);
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+.page-nav a{
+  width:10px;height:10px;border-radius:50%;
+  border:1px solid rgba(255,255,255,.7);
+  background:rgba(255,255,255,.14);
+  box-shadow:0 0 0 3px rgba(16,40,94,.08);
+}
+.page-nav a:hover{background:#fff}
+
+/* ----------------------------------
+   DECORATIVE BOTANICAL SVG ELEMENTS
+---------------------------------- */
+.botanical{
+  position:absolute;
+  width:260px;
+  height:340px;
+  color:currentColor;
+  opacity:.82;
+  pointer-events:none;
+}
+.botanical path,
+.botanical ellipse,
+.botanical circle{
+  stroke:currentColor;
+  fill:none;
+  stroke-width:1.1;
+}
+.botanical .fill{
+  fill:currentColor;
+  stroke:none;
+  opacity:.1;
+}
+
+/* reusable ornate border */
+.ornate-frame{
+  position:absolute;
+  inset:26px;
+  pointer-events:none;
+  border:1px solid currentColor;
+  opacity:.6;
+}
+.ornate-frame::before,
+.ornate-frame::after{
+  content:"";
+  position:absolute;
+  left:50%;
+  width:94px;
+  height:18px;
+  transform:translateX(-50%);
+  background:inherit;
+}
+.ornate-frame::before{top:-9px}
+.ornate-frame::after{bottom:-9px}
+
+.corner-square{
+  position:absolute;
+  width:56px;
+  height:56px;
+  border-color:currentColor;
+  opacity:.65;
+}
+.cs1{left:12px;top:12px;border-left:1px solid;border-top:1px solid}
+.cs2{right:12px;top:12px;border-right:1px solid;border-top:1px solid}
+.cs3{left:12px;bottom:12px;border-left:1px solid;border-bottom:1px solid}
+.cs4{right:12px;bottom:12px;border-right:1px solid;border-bottom:1px solid}
+
+/* ==========================
+   PAGE 1
+========================== */
+.page-1{
+  background:
+    radial-gradient(circle at 50% 40%,rgba(78,111,192,.55),transparent 35%),
+    linear-gradient(155deg,#0f285f 0%,#173783 46%,#2146a5 100%);
+}
+
+.page-1 .page-inner{
+  color:var(--ivory);
+  background:
+    linear-gradient(rgba(255,255,255,.018),rgba(255,255,255,.018)),
+    linear-gradient(150deg,rgba(10,30,82,.2),rgba(75,112,199,.08));
+  border:1px solid rgba(255,255,255,.1);
+}
+
+.page1-left{
+  left:-50px;
+  bottom:-35px;
+  transform:rotate(-11deg);
+}
+.page1-right{
+  right:-45px;
+  top:-24px;
+  transform:rotate(172deg);
+}
+
+.arch{
+  position:absolute;
+  width:min(630px,78%);
+  height:72%;
+  border:1px solid rgba(248,245,238,.34);
+  border-radius:320px 320px 0 0;
+  top:12%;
+  left:50%;
+  transform:translateX(-50%);
+}
+.arch::before{
+  content:"";
+  position:absolute;
+  inset:13px;
+  border:1px solid rgba(248,245,238,.14);
+  border-radius:310px 310px 0 0;
+}
+
+.cover-content{
+  width:min(570px,78%);
+  text-align:center;
+  position:relative;
+  z-index:3;
+  padding:54px 20px;
+}
+
+.cover-kicker{
+  font-size:.56rem;
+  text-transform:uppercase;
+  letter-spacing:.3em;
+  color:var(--pale);
+  margin-bottom:34px;
+}
+
+.monogram{
+  width:76px;
+  height:76px;
+  margin:0 auto 28px;
+  border:1px solid rgba(248,245,238,.7);
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  font-family:var(--serif);
+  font-size:1.65rem;
+  position:relative;
+}
+.monogram::before{
+  content:"";
+  position:absolute;
+  inset:7px;
+  border:1px dashed rgba(248,245,238,.25);
+  border-radius:50%;
+}
+
+.names{
+  margin:0;
+  font-family:var(--serif);
+  font-size:clamp(5.2rem,12vw,8.8rem);
+  font-weight:400;
+  line-height:.67;
+  letter-spacing:-.06em;
+  text-shadow:0 8px 35px rgba(7,20,53,.2);
+}
+.names .amp{
+  display:block;
+  color:#C9D5FF;
+  font-style:italic;
+  font-size:.46em;
+  margin:.12em 0 .15em;
+}
+
+.cover-rule{
+  display:grid;
+  grid-template-columns:1fr auto 1fr;
+  gap:12px;
+  align-items:center;
+  margin:34px auto 25px;
+  width:min(370px,90%);
+}
+.cover-rule span:first-child,
+.cover-rule span:last-child{
+  height:1px;
+  background:rgba(255,255,255,.35);
+}
+.cover-rule i{
+  width:8px;height:8px;border:1px solid rgba(255,255,255,.75);
+  transform:rotate(45deg);
+}
+
+.reserved{
+  font-family:var(--serif);
+  font-size:1.15rem;
+  color:rgba(255,255,255,.75);
+}
+.guest-name{
+  font-family:var(--serif);
+  color:#fff;
+  font-size:clamp(2.2rem,5vw,3.7rem);
+  margin:7px 0 12px;
+  line-height:1;
+}
+.cover-date{
+  margin-top:30px;
+  display:inline-flex;
+  gap:15px;
+  align-items:center;
+  padding:10px 20px;
+  border-top:1px solid rgba(255,255,255,.24);
+  border-bottom:1px solid rgba(255,255,255,.24);
+  color:#dce5ff;
+  text-transform:uppercase;
+  letter-spacing:.2em;
+  font-size:.52rem;
+}
+
+/* ==========================
+   PAGE 2
+========================== */
+.page-2{
+  background:
+    linear-gradient(110deg,#173783 0 11%,#e9eefc 11% 89%,#173783 89% 100%);
+  color:var(--blue2);
+}
+
+.page-2 .page-inner{
+  background:
+    radial-gradient(circle at center,rgba(255,255,255,.75),transparent 46%),
+    linear-gradient(135deg,#f7f4ec,#eef2fb);
+  border:1px solid rgba(33,70,165,.18);
+  color:var(--blue2);
+}
+
+/* full decorative side fields */
+.page2-side{
+  position:absolute;
+  top:0;bottom:0;
+  width:120px;
+  background:
+    radial-gradient(circle at 20px 20px,rgba(255,255,255,.13) 1px,transparent 1.5px) 0 0/24px 24px,
+    linear-gradient(180deg,#2146a5,#163783);
+}
+.page2-side.left{left:0}
+.page2-side.right{right:0}
+
+.page2-side::after{
+  content:"";
+  position:absolute;
+  inset:20px;
+  border:1px solid rgba(255,255,255,.18);
+}
+
+.page2-floral-left{
+  left:-15px;
+  top:6%;
+  width:230px;
+  height:330px;
+  color:#2146A5;
+  opacity:.7;
+}
+.page2-floral-right{
+  right:-15px;
+  bottom:3%;
+  width:240px;
+  height:350px;
+  color:#2146A5;
+  opacity:.7;
+  transform:rotate(180deg);
+}
+
+.page2-content{
+  width:min(620px,72%);
+  position:relative;
+  z-index:4;
+  text-align:center;
+  padding:48px 20px;
+}
+
+.page2-kicker{
+  color:var(--blue);
+  font-size:.52rem;
+  text-transform:uppercase;
+  letter-spacing:.27em;
+}
+.page2-heading{
+  margin:17px 0 8px;
+  font-family:var(--serif);
+  font-size:clamp(4rem,8vw,6.7rem);
+  font-weight:400;
+  letter-spacing:-.05em;
+  line-height:.77;
+}
+.page2-heading em{color:var(--blue);font-weight:400}
+
+.intro{
+  width:min(470px,100%);
+  margin:22px auto 34px;
+  color:#68708a;
+  font-family:var(--serif);
+  font-size:1.15rem;
+  line-height:1.5;
+}
+
+.events{
+  display:grid;
+  gap:13px;
+}
+.event-card{
+  position:relative;
+  display:grid;
+  grid-template-columns:82px 1fr;
+  gap:20px;
+  align-items:center;
+  text-align:left;
+  padding:22px 24px;
+  color:var(--ivory);
+  background:linear-gradient(110deg,#173783,#2146A5);
+  box-shadow:0 12px 30px rgba(33,70,165,.13);
+  overflow:hidden;
+}
+.event-card::after{
+  content:"";
+  position:absolute;
+  width:160px;height:160px;
+  border:1px solid rgba(255,255,255,.12);
+  border-radius:50%;
+  right:-75px;top:-75px;
+}
+.event-no{
+  font-family:var(--serif);
+  color:#C9D5FF;
+  font-size:3.1rem;
+  line-height:1;
+  text-align:center;
+  border-right:1px solid rgba(255,255,255,.2);
+}
+.event-label{
+  font-size:.48rem;
+  text-transform:uppercase;
+  letter-spacing:.18em;
+  color:#cbd8ff;
+  margin-bottom:5px;
+}
+.event-title{
+  font-family:var(--serif);
+  font-size:1.55rem;
+  line-height:1.05;
+}
+.event-detail{
+  margin-top:5px;
+  font-size:.62rem;
+  line-height:1.6;
+  color:rgba(255,255,255,.72);
+}
+
+.date-seal{
+  width:96px;height:96px;
+  border-radius:50%;
+  margin:28px auto 0;
+  background:var(--ivory);
+  border:1px solid rgba(33,70,165,.3);
+  box-shadow:0 15px 30px rgba(27,55,131,.1);
+  display:grid;
+  place-items:center;
+  color:var(--blue2);
+  font-family:var(--serif);
+}
+.date-seal strong{
+  display:block;
+  font-size:1.55rem;
+  line-height:.8;
+}
+.date-seal span{
+  display:block;
+  margin-top:4px;
+  font-size:.45rem;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+}
+
+/* ==========================
+   PAGE 3
+========================== */
+.page-3{
+  background:
+    linear-gradient(145deg,#10285e,#173783 50%,#2146A5);
+}
+
+.page-3 .page-inner{
+  color:var(--ivory);
+  background:
+    linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px) 0 0/36px 36px,
+    linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px) 0 0/36px 36px,
+    linear-gradient(145deg,#10285e,#1c419b);
+  border:1px solid rgba(255,255,255,.1);
+}
+
+.page3-left{
+  left:-30px;
+  top:-15px;
+  width:290px;
+  height:390px;
+  color:#dce5ff;
+  transform:rotate(-6deg);
+}
+.page3-right{
+  right:-35px;
+  bottom:-30px;
+  width:300px;
+  height:390px;
+  color:#dce5ff;
+  transform:rotate(178deg);
+}
+
+.big-date{
+  position:absolute;
+  left:50%;
+  top:50%;
+  transform:translate(-50%,-50%);
+  font-family:var(--serif);
+  font-size:clamp(17rem,42vw,31rem);
+  line-height:.7;
+  color:rgba(255,255,255,.035);
+  letter-spacing:-.08em;
+  pointer-events:none;
+}
+
+.closing-panel{
+  position:relative;
+  z-index:3;
+  width:min(640px,78%);
+  text-align:center;
+  padding:54px 32px;
+  border:1px solid rgba(255,255,255,.22);
+  background:rgba(8,28,78,.2);
+  backdrop-filter:blur(4px);
+}
+.closing-panel::before,
+.closing-panel::after{
+  content:"";
+  position:absolute;
+  left:50%;
+  width:74%;
+  height:1px;
+  transform:translateX(-50%);
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.38),transparent);
+}
+.closing-panel::before{top:18px}
+.closing-panel::after{bottom:18px}
+
+.final-kicker{
+  color:#cbd8ff;
+  font-size:.5rem;
+  letter-spacing:.25em;
+  text-transform:uppercase;
+}
+.final-heading{
+  margin:20px 0 18px;
+  font-family:var(--serif);
+  font-size:clamp(4.1rem,9vw,7rem);
+  font-weight:400;
+  line-height:.76;
+  letter-spacing:-.05em;
+}
+.final-heading em{
+  display:block;
+  color:#cbd8ff;
+  font-weight:400;
+}
+.final-copy{
+  max-width:470px;
+  margin:0 auto;
+  font-family:var(--serif);
+  font-size:1.14rem;
+  line-height:1.48;
+  color:rgba(255,255,255,.76);
+}
+.final-guest{
+  margin:25px auto;
+  padding:14px 18px;
+  width:min(400px,100%);
+  border-top:1px solid rgba(255,255,255,.2);
+  border-bottom:1px solid rgba(255,255,255,.2);
+}
+.final-guest small{
+  display:block;
+  color:#cbd8ff;
+  text-transform:uppercase;
+  letter-spacing:.18em;
+  font-size:.46rem;
+  margin-bottom:7px;
+}
+.final-guest strong{
+  font-family:var(--serif);
+  font-size:2rem;
+  font-weight:500;
+}
+.website-note{
+  font-size:.53rem;
+  text-transform:uppercase;
+  letter-spacing:.16em;
+  color:rgba(255,255,255,.62);
+  line-height:1.7;
+}
+.pe-mark{
+  margin:30px auto 0;
+  width:70px;height:70px;
+  border-radius:50%;
+  border:1px solid rgba(255,255,255,.38);
+  display:grid;
+  place-items:center;
+  font-family:var(--serif);
+  font-size:1.4rem;
+}
+
+/* page number labels */
+.page-no{
+  position:absolute;
+  top:34px;
+  right:38px;
+  z-index:10;
+  font-family:var(--serif);
+  font-size:1rem;
+  opacity:.7;
+}
+.page-tag{
+  position:absolute;
+  left:38px;
+  bottom:34px;
+  z-index:10;
+  font-size:.46rem;
+  text-transform:uppercase;
+  letter-spacing:.22em;
+  opacity:.58;
+}
+
+/* Responsive */
+@media(max-width:720px){
+  .invite-page{padding:0}
+  .page-inner{
+    width:100%;
+    min-height:100svh;
+    border:none!important;
+  }
+  .page-nav{right:10px}
+  .ornate-frame{inset:14px}
+  .cover-content{width:84%;padding:40px 12px}
+  .arch{width:78%;height:68%;top:15%}
+  .names{font-size:clamp(4.8rem,20vw,6.8rem)}
+  .guest-name{font-size:2.5rem}
+  .cover-date{font-size:.46rem;padding:8px 12px;gap:10px}
+
+  .page2-side{width:48px}
+  .page2-side::after{inset:9px}
+  .page2-content{width:82%;padding-inline:10px}
+  .page2-heading{font-size:4.6rem}
+  .intro{font-size:1.03rem;margin-bottom:24px}
+  .event-card{
+    grid-template-columns:58px 1fr;
+    gap:13px;
+    padding:18px 16px;
+  }
+  .event-no{font-size:2.45rem}
+  .event-title{font-size:1.25rem}
+  .event-detail{font-size:.56rem}
+  .page2-floral-left,.page2-floral-right{width:180px;opacity:.46}
+
+  .closing-panel{width:84%;padding:44px 22px}
+  .final-heading{font-size:4.7rem}
+  .final-copy{font-size:1.03rem}
+  .big-date{font-size:20rem}
+  .page3-left,.page3-right{width:210px;opacity:.55}
+
+  .page-no{top:22px;right:22px}
+  .page-tag{left:22px;bottom:22px}
+}
+
+@media(max-width:420px){
+  .cover-content{width:88%}
+  .arch{width:82%}
+  .monogram{width:64px;height:64px}
+  .names{font-size:4.65rem}
+  .page2-content{width:84%}
+  .page2-heading{font-size:4rem}
+  .events{gap:9px}
+  .event-card{padding:15px 13px}
+  .date-seal{width:82px;height:82px;margin-top:19px}
+  .closing-panel{width:88%}
+  .final-heading{font-size:4.15rem}
+}
+</style>
+</head>
+
+<body>
+
+<nav class="page-nav" aria-label="Invitation pages">
+  <a href="#page1" title="Cover"></a>
+  <a href="#page2" title="Wedding Details"></a>
+  <a href="#page3" title="Closing"></a>
+</nav>
+
+<!-- ===================================
+     PAGE 1 — PERSONALIZED COVER
+=================================== -->
+<section class="invite-page page-1" id="page1">
+  <div class="page-inner">
+
+    <div class="texture"></div>
+    <div class="ornate-frame"></div>
+    <span class="corner-square cs1"></span>
+    <span class="corner-square cs2"></span>
+    <span class="corner-square cs3"></span>
+    <span class="corner-square cs4"></span>
+
+    <!-- decorative botanical left -->
+    <svg class="botanical page1-left" viewBox="0 0 260 340" aria-hidden="true">
+      <path d="M42 334C60 275 74 216 111 162C135 127 160 90 182 28"/>
+      <path d="M83 246C55 231 35 204 27 171"/>
+      <path d="M95 218C127 211 151 192 165 165"/>
+      <path d="M119 151C90 139 72 117 63 89"/>
+      <path d="M135 124C166 111 184 90 194 60"/>
+      <ellipse cx="49" cy="187" rx="15" ry="35" transform="rotate(-37 49 187)"/>
+      <ellipse cx="146" cy="189" rx="15" ry="36" transform="rotate(48 146 189)"/>
+      <ellipse cx="77" cy="114" rx="14" ry="33" transform="rotate(-36 77 114)"/>
+      <ellipse cx="177" cy="89" rx="14" ry="32" transform="rotate(42 177 89)"/>
+      <circle cx="182" cy="28" r="9"/>
+      <path d="M41 333C82 312 114 317 148 336"/>
+    </svg>
+
+    <!-- decorative botanical right -->
+    <svg class="botanical page1-right" viewBox="0 0 260 340" aria-hidden="true">
+      <path d="M42 334C60 275 74 216 111 162C135 127 160 90 182 28"/>
+      <path d="M83 246C55 231 35 204 27 171"/>
+      <path d="M95 218C127 211 151 192 165 165"/>
+      <path d="M119 151C90 139 72 117 63 89"/>
+      <path d="M135 124C166 111 184 90 194 60"/>
+      <ellipse cx="49" cy="187" rx="15" ry="35" transform="rotate(-37 49 187)"/>
+      <ellipse cx="146" cy="189" rx="15" ry="36" transform="rotate(48 146 189)"/>
+      <ellipse cx="77" cy="114" rx="14" ry="33" transform="rotate(-36 77 114)"/>
+      <ellipse cx="177" cy="89" rx="14" ry="32" transform="rotate(42 177 89)"/>
+      <circle cx="182" cy="28" r="9"/>
+    </svg>
+
+    <div class="arch"></div>
+
+    <div class="cover-content">
+      <div class="cover-kicker">A Personal Wedding Invitation</div>
+
+      <div class="monogram">P&amp;E</div>
+
+      <h1 class="names">
+        Philip
+        <span class="amp">&amp;</span>
+        Ednalyn
+      </h1>
+
+      <div class="cover-rule">
+        <span></span><i></i><span></span>
+      </div>
+
+      <div class="reserved">This invitation is specially reserved for</div>
+
+      <!-- REPLACE WITH ACTUAL GUEST NAME -->
+      <div class="guest-name">[Guest Name]</div>
+
+      <div class="cover-date">
+        <span>October 17, 2026</span>
+        <span>·</span>
+        <span>Angat, Bulacan</span>
+      </div>
+    </div>
+
+    <div class="page-no">01 / 03</div>
+    <div class="page-tag">The Invitation</div>
+  </div>
+</section>
+
+<!-- ===================================
+     PAGE 2 — WEDDING DETAILS
+=================================== -->
+<section class="invite-page page-2" id="page2">
+  <div class="page-inner">
+
+    <div class="texture"></div>
+    <div class="page2-side left"></div>
+    <div class="page2-side right"></div>
+
+    <svg class="botanical page2-floral-left" viewBox="0 0 260 340" aria-hidden="true">
+      <path d="M42 334C60 275 74 216 111 162C135 127 160 90 182 28"/>
+      <path d="M83 246C55 231 35 204 27 171"/>
+      <path d="M95 218C127 211 151 192 165 165"/>
+      <path d="M119 151C90 139 72 117 63 89"/>
+      <path d="M135 124C166 111 184 90 194 60"/>
+      <ellipse cx="49" cy="187" rx="15" ry="35" transform="rotate(-37 49 187)"/>
+      <ellipse cx="146" cy="189" rx="15" ry="36" transform="rotate(48 146 189)"/>
+      <ellipse cx="77" cy="114" rx="14" ry="33" transform="rotate(-36 77 114)"/>
+      <ellipse cx="177" cy="89" rx="14" ry="32" transform="rotate(42 177 89)"/>
+      <circle cx="182" cy="28" r="9"/>
+    </svg>
+
+    <svg class="botanical page2-floral-right" viewBox="0 0 260 340" aria-hidden="true">
+      <path d="M42 334C60 275 74 216 111 162C135 127 160 90 182 28"/>
+      <path d="M83 246C55 231 35 204 27 171"/>
+      <path d="M95 218C127 211 151 192 165 165"/>
+      <path d="M119 151C90 139 72 117 63 89"/>
+      <path d="M135 124C166 111 184 90 194 60"/>
+      <ellipse cx="49" cy="187" rx="15" ry="35" transform="rotate(-37 49 187)"/>
+      <ellipse cx="146" cy="189" rx="15" ry="36" transform="rotate(48 146 189)"/>
+      <ellipse cx="77" cy="114" rx="14" ry="33" transform="rotate(-36 77 114)"/>
+      <ellipse cx="177" cy="89" rx="14" ry="32" transform="rotate(42 177 89)"/>
+      <circle cx="182" cy="28" r="9"/>
+    </svg>
+
+    <div class="page2-content">
+      <div class="page2-kicker">Together with their families</div>
+
+      <h2 class="page2-heading">
+        One day.<br>
+        <em>One forever.</em>
+      </h2>
+
+      <p class="intro">
+        We joyfully invite you to witness the beginning of our forever and celebrate with us as we begin this beautiful new chapter.
+      </p>
+
+      <div class="events">
+        <article class="event-card">
+          <div class="event-no">01</div>
+          <div>
+            <div class="event-label">The Ceremony</div>
+            <div class="event-title">St. Andrew Parish Church</div>
+            <div class="event-detail">Angat, Bulacan · October 17, 2026</div>
+          </div>
+        </article>
+
+        <article class="event-card">
+          <div class="event-no">02</div>
+          <div>
+            <div class="event-label">The Reception</div>
+            <div class="event-title">RCA Angat</div>
+            <div class="event-detail">Angat, Bulacan · Celebration to follow</div>
+          </div>
+        </article>
+
+        <article class="event-card">
+          <div class="event-no">03</div>
+          <div>
+            <div class="event-label">Your Invitation</div>
+            <div class="event-title">Reserved Especially for You</div>
+            <div class="event-detail">Please refer to our wedding website for the complete schedule, attire guide, and RSVP.</div>
+          </div>
+        </article>
+      </div>
+
+      <div class="date-seal">
+        <div>
+          <strong>17·10</strong>
+          <span>2026</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-no">02 / 03</div>
+    <div class="page-tag">The Wedding Day</div>
+  </div>
+</section>
+
+<!-- ===================================
+     PAGE 3 — CLOSING / RSVP
+=================================== -->
+<section class="invite-page page-3" id="page3">
+  <div class="page-inner">
+
+    <div class="texture"></div>
+    <div class="ornate-frame"></div>
+    <span class="corner-square cs1"></span>
+    <span class="corner-square cs2"></span>
+    <span class="corner-square cs3"></span>
+    <span class="corner-square cs4"></span>
+
+    <div class="big-date">17</div>
+
+    <svg class="botanical page3-left" viewBox="0 0 260 340" aria-hidden="true">
+      <path d="M42 334C60 275 74 216 111 162C135 127 160 90 182 28"/>
+      <path d="M83 246C55 231 35 204 27 171"/>
+      <path d="M95 218C127 211 151 192 165 165"/>
+      <path d="M119 151C90 139 72 117 63 89"/>
+      <path d="M135 124C166 111 184 90 194 60"/>
+      <ellipse cx="49" cy="187" rx="15" ry="35" transform="rotate(-37 49 187)"/>
+      <ellipse cx="146" cy="189" rx="15" ry="36" transform="rotate(48 146 189)"/>
+      <ellipse cx="77" cy="114" rx="14" ry="33" transform="rotate(-36 77 114)"/>
+      <ellipse cx="177" cy="89" rx="14" ry="32" transform="rotate(42 177 89)"/>
+      <circle cx="182" cy="28" r="9"/>
+    </svg>
+
+    <svg class="botanical page3-right" viewBox="0 0 260 340" aria-hidden="true">
+      <path d="M42 334C60 275 74 216 111 162C135 127 160 90 182 28"/>
+      <path d="M83 246C55 231 35 204 27 171"/>
+      <path d="M95 218C127 211 151 192 165 165"/>
+      <path d="M119 151C90 139 72 117 63 89"/>
+      <path d="M135 124C166 111 184 90 194 60"/>
+      <ellipse cx="49" cy="187" rx="15" ry="35" transform="rotate(-37 49 187)"/>
+      <ellipse cx="146" cy="189" rx="15" ry="36" transform="rotate(48 146 189)"/>
+      <ellipse cx="77" cy="114" rx="14" ry="33" transform="rotate(-36 77 114)"/>
+      <ellipse cx="177" cy="89" rx="14" ry="32" transform="rotate(42 177 89)"/>
+      <circle cx="182" cy="28" r="9"/>
+    </svg>
+
+    <div class="closing-panel">
+      <div class="final-kicker">Save the date · Share the moment</div>
+
+      <h2 class="final-heading">
+        We would love<br>
+        <em>to have you there.</em>
+      </h2>
+
+      <p class="final-copy">
+        Your presence would make this celebration even more meaningful. We cannot wait to share this day with the people who have become part of our story.
+      </p>
+
+      <div class="final-guest">
+        <small>This personal invitation belongs to</small>
+        <strong>[Guest Name]</strong>
+      </div>
+
+      <div class="website-note">
+        Complete wedding details · attire · timeline · maps · RSVP<br>
+        are available through our wedding website
+      </div>
+
+      <div class="pe-mark">P&amp;E</div>
+    </div>
+
+    <div class="page-no">03 / 03</div>
+    <div class="page-tag">October 17, 2026 · Philip & Ednalyn</div>
+  </div>
+</section>
+
+</body>
+</html>

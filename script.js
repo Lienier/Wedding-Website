@@ -23,6 +23,21 @@ window.addEventListener("scroll", () => {
 const menuBtn = document.getElementById("menuBtn");
 const mobilePanel = document.getElementById("mobilePanel");
 
+// Keep the complete Wall of Wishes page embedded in the single invitation page
+// without creating a nested scrollbar.
+const wishesFrame = document.getElementById("wishesFrame");
+if(wishesFrame){
+  const resizeWishesFrame = () => {
+    try {
+      wishesFrame.style.height = wishesFrame.contentDocument.documentElement.scrollHeight + "px";
+    } catch(e) {
+      wishesFrame.style.height = "2200px";
+    }
+  };
+  wishesFrame.addEventListener("load", resizeWishesFrame);
+  window.addEventListener("resize", resizeWishesFrame, {passive:true});
+}
+
 function closeMenu(){
   menuBtn.classList.remove("active");
   mobilePanel.classList.remove("open");
@@ -176,18 +191,36 @@ document.addEventListener("keydown", e => {
   }
 });
 
-// DEMO RSVP
-// This stores the response only in the visitor's browser.
-// Connect this form to Google Sheets / Firebase / Supabase / Formspree later.
+// RSVP → Supabase, with localStorage fallback until Supabase is configured.
 const rsvpForm = document.getElementById("rsvpForm");
 const formStatus = document.getElementById("formStatus");
 
-rsvpForm.addEventListener("submit", e => {
+ rsvpForm.addEventListener("submit", async e => {
   e.preventDefault();
 
   const data = Object.fromEntries(new FormData(rsvpForm).entries());
-  localStorage.setItem("wedding_rsvp_demo", JSON.stringify(data));
+  const client = window.getSupabaseClient?.();
 
-  formStatus.textContent = "Thank you — your RSVP has been recorded on this device.";
+  formStatus.textContent = "Sending your RSVP…";
+
+  if(client){
+    const { error } = await client.from("rsvps").insert({
+      full_name: data.fullName,
+      contact: data.contact,
+      attendance: data.attendance,
+      guests: Number(data.guests),
+      message: data.message || ""
+    });
+    if(error){
+      formStatus.textContent = "We couldn’t send that just yet. Please try again.";
+      return;
+    }
+  }else{
+    localStorage.setItem("wedding_rsvp_demo", JSON.stringify(data));
+  }
+
+  formStatus.textContent = client
+    ? "Thank you — your RSVP has been received."
+    : "Thank you — your RSVP has been recorded on this device.";
   rsvpForm.reset();
 });
