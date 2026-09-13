@@ -963,6 +963,21 @@ footer small{
     width:100%;
   }
 }
+@media(max-width:700px){
+  .shell{width:calc(100% - 40px)}
+  .topbar-inner{flex-wrap:wrap;gap:12px;padding-block:14px}
+  .top-actions{margin-left:auto}
+  .primary,.filter{min-height:44px}
+  .hero{padding:36px 0 24px;gap:20px}
+  .hero h1{font-size:clamp(2.65rem,10.8vw,4rem);line-height:1.02}
+  .hero-copy{font-size:1.05rem;line-height:1.6}
+  .filters{display:flex;flex-wrap:wrap;gap:6px}
+  .filter{font-size:.6rem;padding:10px}
+  .board-viewport{height:440px;height:clamp(340px,60svh,500px);border-width:8px}
+  .board-wrap{padding-bottom:36px}
+  .modal-card{max-height:90dvh}
+  input,textarea,select{font-size:16px}
+}
 </style>
 </head>
 

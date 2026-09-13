@@ -42,13 +42,24 @@ function closeMenu(){
   menuBtn.classList.remove("active");
   mobilePanel.classList.remove("open");
   menuBtn.setAttribute("aria-expanded","false");
+  menuBtn.setAttribute("aria-label", "Open menu");
+  mobilePanel.setAttribute("aria-hidden", "true");
+  mobilePanel.inert = true;
 }
 
 menuBtn.addEventListener("click", () => {
   const isOpen = mobilePanel.classList.toggle("open");
   menuBtn.classList.toggle("active", isOpen);
   menuBtn.setAttribute("aria-expanded", String(isOpen));
+  menuBtn.setAttribute("aria-label", isOpen ? "Close menu" : "Open menu");
+  mobilePanel.setAttribute("aria-hidden", String(!isOpen));
+  mobilePanel.inert = !isOpen;
 });
+closeMenu();
+document.addEventListener("click", e => {
+  if (!mobilePanel.contains(e.target) && !menuBtn.contains(e.target)) closeMenu();
+});
+window.addEventListener("resize", () => { if (window.innerWidth > 980) closeMenu(); });
 
 mobilePanel.querySelectorAll("a").forEach(a => {
   a.addEventListener("click", closeMenu);
@@ -117,24 +128,162 @@ document.querySelectorAll(".faq-item").forEach(item => {
   });
 });
 
-// GALLERY LIGHTBOX
+// PRENUPTIAL DEPTH CAROUSEL + LIGHTBOX
 const lightbox = document.getElementById("lightbox");
 const lightboxImage = document.getElementById("lightboxImage");
 const lightboxClose = document.getElementById("lightboxClose");
+const galleryGrid = document.getElementById("galleryGrid");
+const carouselWrap = document.getElementById("prenuptialCarousel");
+const carouselDots = document.getElementById("prenuptialDots");
+const carouselPrev = carouselWrap?.querySelector(".depth-arrow-prev");
+const carouselNext = carouselWrap?.querySelector(".depth-arrow-next");
+const galleryCards = [...document.querySelectorAll("#galleryGrid button")];
+const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-document.querySelectorAll("#galleryGrid button").forEach(btn => {
-  btn.addEventListener("click", () => {
-    lightboxImage.src = btn.dataset.full || btn.querySelector("img").src;
-    lightbox.classList.add("open");
-    lightbox.setAttribute("aria-hidden","false");
-    document.body.classList.add("no-scroll");
+let activeGalleryIndex = 0;
+let galleryPosition = 0;
+let galleryFrame = 0;
+let galleryTimer = null;
+let drag = null;
+let suppressClick = false;
+let galleryVisible = false;
+let galleryHovered = false;
+const wrapIndex = value => ((value % galleryCards.length) + galleryCards.length) % galleryCards.length;
+
+function openGalleryImage(btn){
+  stopGalleryAutoplay();
+  lightboxImage.src = btn.dataset.full || btn.querySelector("img").src;
+  lightboxImage.alt = btn.querySelector("img").alt;
+  lightbox.classList.add("open");
+  lightbox.setAttribute("aria-hidden","false");
+  document.body.classList.add("no-scroll");
+}
+
+// Animate a continuous position along the reference's one-sided depth rail.
+function layoutGallery(){
+  const scale = Math.min(1, carouselWrap.clientWidth / 580);
+  galleryCards.forEach((card, index) => {
+    let d = wrapIndex(index - galleryPosition);
+    if(d > galleryCards.length / 2) d -= galleryCards.length;
+    const back = Math.max(0, d);
+    const opacity = d < 0 ? Math.max(0, 1 + d) : Math.min(1, Math.max(0, 4.5 - d));
+    card.style.transform = `translate(-50%, -50%) scale(${scale}) translateX(${90*d}px) translateZ(${-220*d}px) rotateY(${22*Math.min(1,back)}deg)`;
+    card.style.opacity = opacity;
+    card.style.filter = `brightness(${Math.max(.2,1-back*.2)}) blur(${Math.min(6,back*1.5)}px)`;
+    card.style.zIndex = String(Math.round(2000-d*20));
+    card.style.pointerEvents = opacity > .1 ? "auto" : "none";
+    card.style.setProperty("--shade", Math.min(.65,back*.2));
+    card.classList.toggle("is-active", index === activeGalleryIndex);
+    card.tabIndex = index === activeGalleryIndex ? 0 : -1;
+    card.setAttribute("aria-hidden", String(index !== activeGalleryIndex));
   });
-});
+}
+
+function setGalleryIndex(index){
+  cancelAnimationFrame(galleryFrame);
+  activeGalleryIndex = wrapIndex(index);
+  let delta = wrapIndex(activeGalleryIndex - galleryPosition);
+  if(delta > galleryCards.length/2) delta -= galleryCards.length;
+  const start = galleryPosition;
+  const started = performance.now();
+  carouselDots.querySelectorAll("button").forEach((dot, i) => {
+    dot.classList.toggle("is-active", i === activeGalleryIndex);
+    dot.setAttribute("aria-current", String(i === activeGalleryIndex));
+  });
+  const animate = now => {
+    const t = reduceMotion ? 1 : Math.min(1,(now-started)/700);
+    galleryPosition = start + delta*(1-Math.pow(1-t,4));
+    layoutGallery();
+    if(t < 1) galleryFrame = requestAnimationFrame(animate);
+    else galleryPosition = wrapIndex(galleryPosition);
+  };
+  galleryFrame = requestAnimationFrame(animate);
+  startGalleryAutoplay();
+}
+function moveGallery(step){ setGalleryIndex(activeGalleryIndex + step); }
+function stopGalleryAutoplay(){ clearTimeout(galleryTimer); }
+function startGalleryAutoplay(){
+  stopGalleryAutoplay();
+  if(reduceMotion || !galleryVisible || galleryHovered || drag || document.hidden ||
+    carouselWrap.contains(document.activeElement) || lightbox.classList.contains("open")) return;
+  galleryTimer = setTimeout(() => moveGallery(1), 4000);
+}
+
+if(galleryGrid && carouselWrap){
+  carouselDots.setAttribute("role", "group");
+  galleryCards.forEach((btn,index) => {
+    btn.querySelector("img").draggable = false;
+    const dot = document.createElement("button");
+    dot.className = "depth-dot";
+    dot.type = "button";
+    dot.setAttribute("aria-label", `Go to prenuptial photo ${index+1}`);
+    dot.addEventListener("click", () => setGalleryIndex(index));
+    carouselDots.appendChild(dot);
+    btn.addEventListener("click", () => {
+      if(suppressClick) return;
+      if(index === activeGalleryIndex) openGalleryImage(btn);
+      else setGalleryIndex(index);
+    });
+  });
+  carouselPrev.addEventListener("click", () => moveGallery(-1));
+  carouselNext.addEventListener("click", () => moveGallery(1));
+  carouselWrap.addEventListener("keydown", e => {
+    if(e.key === "ArrowLeft" || e.key === "ArrowRight"){
+      e.preventDefault();
+      moveGallery(e.key === "ArrowRight" ? 1 : -1);
+    }
+  });
+  galleryGrid.addEventListener("dragstart", e => e.preventDefault());
+  galleryGrid.addEventListener("pointerdown", e => {
+    if(!e.isPrimary || e.button !== 0) return;
+    cancelAnimationFrame(galleryFrame);
+    stopGalleryAutoplay();
+    suppressClick = false;
+    drag = {id:e.pointerId,x:e.clientX,y:e.clientY,pos:galleryPosition,moved:false};
+  });
+  galleryGrid.addEventListener("pointermove", e => {
+    if(!drag || e.pointerId !== drag.id) return;
+    const dx = e.clientX-drag.x;
+    if(!drag.moved && Math.abs(e.clientY-drag.y) > Math.abs(dx)+8){ drag=null; startGalleryAutoplay(); return; }
+    if(!drag.moved && Math.abs(dx)>8){
+      drag.moved=true;
+      suppressClick=true;
+      galleryGrid.setPointerCapture(e.pointerId);
+    }
+    if(drag.moved){
+      galleryPosition=drag.pos-dx/Math.max(100,Math.min(190,carouselWrap.clientWidth*.4));
+      layoutGallery();
+    }
+  });
+  const endDrag = e => {
+    if(!drag || e.pointerId !== drag.id) return;
+    const moved=drag.moved;
+    drag=null;
+    if(galleryGrid.hasPointerCapture(e.pointerId)) galleryGrid.releasePointerCapture(e.pointerId);
+    if(moved) setGalleryIndex(Math.round(galleryPosition));
+    startGalleryAutoplay();
+    setTimeout(() => { suppressClick=false; },0);
+  };
+  window.addEventListener("pointerup",endDrag);
+  galleryGrid.addEventListener("pointercancel",endDrag);
+  carouselWrap.addEventListener("mouseenter", () => { galleryHovered=true; stopGalleryAutoplay(); });
+  carouselWrap.addEventListener("mouseleave", () => { galleryHovered=false; startGalleryAutoplay(); });
+  carouselWrap.addEventListener("focusin",stopGalleryAutoplay);
+  carouselWrap.addEventListener("focusout", () => setTimeout(startGalleryAutoplay,0));
+  document.addEventListener("visibilitychange",startGalleryAutoplay);
+  new ResizeObserver(layoutGallery).observe(carouselWrap);
+  new IntersectionObserver(entries => {
+    galleryVisible=entries[0].isIntersecting;
+    startGalleryAutoplay();
+  },{threshold:.25}).observe(carouselWrap);
+  setGalleryIndex(0);
+}
 
 function closeLightbox(){
   lightbox.classList.remove("open");
   lightbox.setAttribute("aria-hidden","true");
   document.body.classList.remove("no-scroll");
+  startGalleryAutoplay();
 }
 
 lightboxClose.addEventListener("click", closeLightbox);

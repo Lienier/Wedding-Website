@@ -46,11 +46,11 @@
     </div>
   </nav>
 
-  <button class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false">
+  <button class="menu-btn" id="menuBtn" aria-controls="mobilePanel" aria-label="Open menu" aria-expanded="false">
     <span></span><span></span>
   </button>
 
-  <div class="circle-nav" id="mobilePanel" aria-hidden="true">
+  <div class="circle-nav" id="mobilePanel" role="navigation" aria-label="Mobile navigation" aria-hidden="true" inert>
     <a href="#story" class="cn-item" style="--i:0;--x:-130px;--y:-45px">Story</a>
     <a href="#day" class="cn-item" style="--i:1;--x:-95px;--y:-110px">Day</a>
     <a href="#people" class="cn-item" style="--i:2;--x:-55px;--y:-155px">People</a>
@@ -140,10 +140,10 @@
         </div>
 
         <div class="formal-meta reveal">
-          Three o’clock in the afternoon<br>
+          Three o’clock in the afternoon at<br>
           <strong>St. Andrew Parish Church</strong><br>
           Norzagaray,Bulacan<br><br>
-          Reception to follow<br>
+          Reception to follow at<br>
           <strong>RCA Pavillion</strong><br>
           Angat, Bulacan
         </div>
@@ -177,7 +177,7 @@
         <div class="venue-row reveal">
           <article class="venue">
             <div class="num">01</div>
-            <div class="venue-time">04:00 PM</div>
+            <div class="venue-time">03:00 PM</div>
             <h3>The Ceremony</h3>
             <p><strong>St. Andrew Parish Church</strong><br>Norzagaray, Bulacan</p>
             <p class="muted">Please arrive at least 1 hour before the ceremony begins.</p>
@@ -186,7 +186,7 @@
 
           <article class="venue">
             <div class="num">02</div>
-            <div class="venue-time">06:00 PM</div>
+            <div class="venue-time">04:30 PM</div>
             <h3>The Reception</h3>
             <p><strong>RCA Pavillion</strong><br>Angat, Bulacan</p>
             <p class="muted">Cocktails begin shortly after the ceremony, followed by dinner and party.</p>
@@ -229,18 +229,18 @@
           </div>
           <div class="people-group">
             <div class="people-role">Principal Sponsors</div>
-            <div class="people-names">Ms. Edna De Jesus<br>Ms. Juliet Alarcon<br>Ms. Alice Montemayor<br>Mrs. Aileen Ferrer<br>Mrs. Myra Bernardino<br>Ms. Erlita Rapsing<br>Mrs. Mary Margaret Magcalas</div>
+            <div class="people-names">Ms. Edna De Jesus<br>Ms. Juliet Alarcon<br>Ms. Alice Montemayor<br>Ms. Aileen Ferrer<br>Ms. Myra Santiago<br>Ms. Erlita Rapsing<br>Ms. Mary Margaret Magcalas</div>
           </div>
           <div class="people-group">
             <div class="people-role">Principal Sponsors</div>
             <div class="people-names">Mr. Castor Lobiano<br>Mr. Fritz Capuyan<br>Mr. Anderson Piritos<br>Mr. Cornelio Domingo<br>Engr. Juan Dy Jr.<br>Engr. Aimer Cruz<br>Arch. Roger Candidato</div>
           </div>
           <div class="people-group">
-            <div class="people-role">To Light Our Path To Clothe Us As One</div>
+            <div class="people-role">To Light Our Path</div>
             <div class="people-names">Ms. Christine Grace Merin<br>Mr. Reneil Arayat</div>
           </div>
           <div class="people-group">
-            <div class="people-role">To Light Our Path To Clothe Us As One</div>
+            <div class="people-role">To Clothe Us As One</div>
             <div class="people-names">Mrs. Rochellita Guiling<br>Mr. Edwin Guiling</div>
           </div>
           <div class="people-group">
@@ -257,7 +257,7 @@
           </div>
           <div class="people-group">
             <div class="people-role">Groomsmen</div>
-            <div class="people-names">Mr. Marlon Mendoza<br>Mr. John Lloyd Lobiano<br>Mr. Ronald Pasage<br>Mr. Alberto Rayo</div>
+            <div class="people-names">Mr. Marlon Mendoza<br>Mr. John Loyd Lobiano<br>Mr. Ronald Pasage<br>Mr. Alberto Rayo</div>
           </div>
           <div class="people-group">
             <div class="people-role">Bridesmaids</div>
@@ -339,42 +339,42 @@
           </button>
 
           <div class="gallery prenuptial-gallery" id="galleryGrid" role="group" aria-label="Our prenuptial moments carousel" tabindex="0">
-          <button class="reveal" type="button" aria-label="Enlarge prenuptial photo 1 of 12" data-full="assets/webp/DQZ27239 22.webp">
-            <img src="assets/webp/DQZ27239 22.webp" alt="Philip and Ednalyn prenuptial photo 1" loading="lazy" decoding="async" width="900" height="1125">
-          </button>
-          <button class="reveal" type="button" aria-label="Enlarge prenuptial photo 2 of 12" data-full="assets/webp/DQZ27295 89.webp">
-            <img src="assets/webp/DQZ27295 89.webp" alt="Philip and Ednalyn prenuptial photo 2" loading="lazy" decoding="async" width="900" height="1125">
-          </button>
-          <button class="reveal" type="button" aria-label="Enlarge prenuptial photo 3 of 12" data-full="assets/webp/DQZ27345 148.webp">
-            <img src="assets/webp/DQZ27345 148.webp" alt="Philip and Ednalyn prenuptial photo 3" loading="lazy" decoding="async" width="900" height="1125">
-          </button>
-          <button class="reveal" type="button" aria-label="Enlarge prenuptial photo 4 of 12" data-full="assets/webp/DQZ27545 385.webp">
-            <img src="assets/webp/DQZ27545 385.webp" alt="Philip and Ednalyn prenuptial photo 4" loading="lazy" decoding="async" width="900" height="1125">
-          </button>
-          <button class="reveal" type="button" aria-label="Enlarge prenuptial photo 5 of 12" data-full="assets/webp/DQZ28101 1300.webp">
-            <img src="assets/webp/DQZ28101 1300.webp" alt="Philip and Ednalyn prenuptial photo 5" loading="lazy" decoding="async" width="900" height="1125">
-          </button>
-          <button class="reveal" type="button" aria-label="Enlarge prenuptial photo 6 of 12" data-full="assets/webp/DQZ28163 1362.webp">
-            <img src="assets/webp/DQZ28163 1362.webp" alt="Philip and Ednalyn prenuptial photo 6" loading="lazy" decoding="async" width="900" height="1125">
-          </button>
-          <button class="reveal" type="button" aria-label="Enlarge prenuptial photo 7 of 12" data-full="assets/webp/DQZ28246 1473.webp">
-            <img src="assets/webp/DQZ28246 1473.webp" alt="Philip and Ednalyn prenuptial photo 7" loading="lazy" decoding="async" width="900" height="1125">
-          </button>
-          <button class="reveal" type="button" aria-label="Enlarge prenuptial photo 8 of 12" data-full="assets/webp/DQZ28348 1632.webp">
-            <img src="assets/webp/DQZ28348 1632.webp" alt="Philip and Ednalyn prenuptial photo 8" loading="lazy" decoding="async" width="900" height="1125">
-          </button>
-          <button class="reveal" type="button" aria-label="Enlarge prenuptial photo 9 of 12" data-full="assets/webp/DQZ16657 417.webp">
-            <img src="assets/webp/DQZ16657 417.webp" alt="Philip and Ednalyn prenuptial photo 9" loading="lazy" decoding="async" width="900" height="1125">
-          </button>
-          <button class="reveal" type="button" aria-label="Enlarge prenuptial photo 10 of 12" data-full="assets/webp/DQZ16749 674.webp">
-            <img src="assets/webp/DQZ16749 674.webp" alt="Philip and Ednalyn prenuptial photo 10" loading="lazy" decoding="async" width="900" height="1125">
-          </button>
-          <button class="reveal" type="button" aria-label="Enlarge prenuptial photo 11 of 12" data-full="assets/webp/DQZ16997 1253.webp">
-            <img src="assets/webp/DQZ16997 1253.webp" alt="Philip and Ednalyn prenuptial photo 11" loading="lazy" decoding="async" width="900" height="1125">
-          </button>
-          <button class="reveal" type="button" aria-label="Enlarge prenuptial photo 12 of 12" data-full="assets/webp/DQZ17044 1378.webp">
-            <img src="assets/webp/DQZ17044 1378.webp" alt="Philip and Ednalyn prenuptial photo 12" loading="lazy" decoding="async" width="900" height="1125">
-          </button>
+            <button type="button" aria-label="Enlarge prenuptial photo 1 of 12" data-full="assets/webp/DQZ27239 22.webp">
+              <img src="assets/webp/DQZ27239 22.webp" alt="Philip and Ednalyn prenuptial photo 1" loading="lazy" decoding="async" width="900" height="1125">
+            </button>
+            <button type="button" aria-label="Enlarge prenuptial photo 2 of 12" data-full="assets/webp/DQZ27295 89.webp">
+              <img src="assets/webp/DQZ27295 89.webp" alt="Philip and Ednalyn prenuptial photo 2" loading="lazy" decoding="async" width="900" height="1125">
+            </button>
+            <button type="button" aria-label="Enlarge prenuptial photo 3 of 12" data-full="assets/webp/DQZ27345 148.webp">
+              <img src="assets/webp/DQZ27345 148.webp" alt="Philip and Ednalyn prenuptial photo 3" loading="lazy" decoding="async" width="900" height="1125">
+            </button>
+            <button type="button" aria-label="Enlarge prenuptial photo 4 of 12" data-full="assets/webp/DQZ27545 385.webp">
+              <img src="assets/webp/DQZ27545 385.webp" alt="Philip and Ednalyn prenuptial photo 4" loading="lazy" decoding="async" width="900" height="1125">
+            </button>
+            <button type="button" aria-label="Enlarge prenuptial photo 5 of 12" data-full="assets/webp/DQZ28101 1300.webp">
+              <img src="assets/webp/DQZ28101 1300.webp" alt="Philip and Ednalyn prenuptial photo 5" loading="lazy" decoding="async" width="900" height="1125">
+            </button>
+            <button type="button" aria-label="Enlarge prenuptial photo 6 of 12" data-full="assets/webp/DQZ28163 1362.webp">
+              <img src="assets/webp/DQZ28163 1362.webp" alt="Philip and Ednalyn prenuptial photo 6" loading="lazy" decoding="async" width="900" height="1125">
+            </button>
+            <button type="button" aria-label="Enlarge prenuptial photo 7 of 12" data-full="assets/webp/DQZ28246 1473.webp">
+              <img src="assets/webp/DQZ28246 1473.webp" alt="Philip and Ednalyn prenuptial photo 7" loading="lazy" decoding="async" width="900" height="1125">
+            </button>
+            <button type="button" aria-label="Enlarge prenuptial photo 8 of 12" data-full="assets/webp/DQZ28348 1632.webp">
+              <img src="assets/webp/DQZ28348 1632.webp" alt="Philip and Ednalyn prenuptial photo 8" loading="lazy" decoding="async" width="900" height="1125">
+            </button>
+            <button type="button" aria-label="Enlarge prenuptial photo 9 of 12" data-full="assets/webp/DQZ16657 417.webp">
+              <img src="assets/webp/DQZ16657 417.webp" alt="Philip and Ednalyn prenuptial photo 9" loading="lazy" decoding="async" width="900" height="1125">
+            </button>
+            <button type="button" aria-label="Enlarge prenuptial photo 10 of 12" data-full="assets/webp/DQZ16749 674.webp">
+              <img src="assets/webp/DQZ16749 674.webp" alt="Philip and Ednalyn prenuptial photo 10" loading="lazy" decoding="async" width="900" height="1125">
+            </button>
+            <button type="button" aria-label="Enlarge prenuptial photo 11 of 12" data-full="assets/webp/DQZ16997 1253.webp">
+              <img src="assets/webp/DQZ16997 1253.webp" alt="Philip and Ednalyn prenuptial photo 11" loading="lazy" decoding="async" width="900" height="1125">
+            </button>
+            <button type="button" aria-label="Enlarge prenuptial photo 12 of 12" data-full="assets/webp/DQZ17044 1378.webp">
+              <img src="assets/webp/DQZ17044 1378.webp" alt="Philip and Ednalyn prenuptial photo 12" loading="lazy" decoding="async" width="900" height="1125">
+            </button>
           </div>
 
           <div class="depth-dots" id="prenuptialDots" role="tablist" aria-label="Prenuptial photo slides"></div>
