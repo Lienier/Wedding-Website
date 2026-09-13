@@ -295,23 +295,18 @@ main{overflow:hidden;max-width:100%}
 .unplugged h2{font-size:clamp(3.8rem,8vw,7rem);margin:0 0 26px}
 .unplugged p{color:var(--muted);font-family:var(--serif);font-size:1.35rem}
 
-.rsvp{max-width:620px}
-.rsvp-card{border-left:1px solid var(--line);border-right:1px solid var(--line);padding:clamp(48px,7vw,74px) clamp(28px,6vw,70px);text-align:left}
-.rsvp-heading{text-align:center;color:var(--blue);margin-bottom:48px}
-.rsvp-kindly{display:flex;align-items:center;justify-content:center;gap:16px;font-family:var(--serif);font-size:clamp(3.3rem,8vw,5.5rem);font-style:italic;line-height:.85}
-.rsvp-kindly span{width:54px;height:1px;background:var(--blue)}
-.rsvp-heading h2{margin:12px 0 24px;font-family:var(--serif);font-size:clamp(3.3rem,8vw,5.2rem);font-weight:400;line-height:.8;letter-spacing:.26em}
-.rsvp-heading p{margin:0 auto 34px;color:var(--blue);font-family:var(--serif);font-size:1.15rem;letter-spacing:.35em;text-transform:uppercase;line-height:1.45}
-.rsvp-seat{font-family:var(--serif);font-size:clamp(1.7rem,4vw,2.35rem);line-height:1.2;color:var(--blue)}
-.rsvp-seat span{display:inline-block;min-width:28px;border-bottom:1px solid var(--blue);line-height:.9}
+.rsvp{max-width:1180px}
+.rsvp-intro{max-width:900px;margin-bottom:clamp(58px,9vw,110px)}
+.rsvp-intro h2{font-size:clamp(5rem,12vw,11rem);margin:34px 0 44px}
+.rsvp-intro p{max-width:920px;margin:0;color:var(--muted);font-size:clamp(1.15rem,2.4vw,1.9rem);line-height:1.55}
 .rsvp-form{width:100%}
-.form-row{margin-bottom:30px}
+.form-row{margin-bottom:48px}
 .form-row label{display:block;color:var(--blue);text-transform:uppercase;letter-spacing:.2em;font-size:.68rem;margin-bottom:18px}
-.form-row input,.form-row textarea,.form-row select{width:100%;border:0;border-bottom:1px solid rgba(33,70,165,.38);border-radius:0;padding:12px 0;background:transparent;outline:none;color:var(--ink)}
+.form-row input,.form-row textarea,.form-row select{width:100%;border:0;border-bottom:1px solid rgba(33,70,165,.38);border-radius:0;padding:16px 0;background:transparent;outline:none;color:var(--ink);font-size:1.12rem}
 .form-row input:focus,.form-row textarea:focus,.form-row select:focus{border-bottom-color:var(--blue)}
-.radio-row{display:grid;gap:12px;margin-top:4px}
-.radio-row label{display:flex;align-items:center;gap:12px;color:var(--blue);letter-spacing:.16em;cursor:pointer}
-.radio-row input{width:18px;height:18px;accent-color:var(--blue)}
+.radio-row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:28px;margin-top:16px}
+.radio-row label{display:grid;justify-items:center;gap:12px;color:var(--ink);letter-spacing:.12em;cursor:pointer;text-align:center}
+.radio-row input{width:32px;height:32px;accent-color:var(--blue)}
 .form-row textarea{min-height:140px;resize:vertical}
 .form-status{margin-top:18px;color:var(--blue);min-height:24px;font-size:.85rem}
 
@@ -661,11 +656,7 @@ footer{text-align:center;padding:110px var(--side) 55px;border-top:1px solid rgb
   .gallery{grid-template-columns:1fr}
   .split-editorial h2{font-size:clamp(4.8rem,22vw,6.6rem)}
   .type-break h2{font-size:clamp(4.8rem,22vw,7rem)}
-  .rsvp-card{padding:44px 24px}
-  .rsvp-kindly{gap:10px}
-  .rsvp-kindly span{width:34px}
-  .rsvp-heading h2{letter-spacing:.18em}
-  .rsvp-heading p{font-size:.9rem;letter-spacing:.24em}
+  .rsvp-intro h2{font-size:clamp(4.2rem,18vw,6.8rem)}
 }
 
 @media (prefers-reduced-motion: reduce){
@@ -796,19 +787,15 @@ footer{text-align:center;padding:110px var(--side) 55px;border-top:1px solid rgb
   .faq-a p{font-size:.9rem;line-height:1.75;padding-bottom:20px}
   .unplugged h2{margin-bottom:20px}
   .unplugged p{font-size:1.2rem;line-height:1.5}
-  .rsvp-card{border:1px solid var(--line);padding:32px 20px;background:var(--paper-soft)}
-  .rsvp-heading{margin-bottom:30px}
-  .rsvp-kindly{font-size:3.4rem;gap:12px}
-  .rsvp-kindly span{width:28px;flex-shrink:0}
-  .rsvp-heading h2{font-size:2.8rem;letter-spacing:.14em;margin:16px 0 22px;padding-left:.14em}
-  .rsvp-heading p{font-size:.68rem;letter-spacing:.12em;line-height:1.8;margin-bottom:22px}
-  .rsvp-seat{font-size:1.4rem;line-height:1.4}
-  .form-row{margin-bottom:24px}
+  .rsvp-intro{margin-bottom:56px}
+  .rsvp-intro h2{font-size:clamp(4.1rem,18vw,6.8rem);line-height:.9;margin:28px 0 34px}
+  .rsvp-intro p{font-size:1.2rem;line-height:1.6}
+  .form-row{margin-bottom:36px}
   .form-row label{font-size:.61rem;letter-spacing:.12em;margin-bottom:8px}
   .form-row input,.form-row textarea,.form-row select{font-size:16px;min-height:48px}
-  .radio-row{gap:0}
-  .radio-row label{min-height:48px;margin:0;letter-spacing:.08em}
-  .radio-row input{min-height:0;width:20px;height:20px;flex-shrink:0}
+  .radio-row{grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+  .radio-row label{min-height:48px;margin:0;letter-spacing:.06em;font-size:.62rem}
+  .radio-row input{min-height:0;width:28px;height:28px;flex-shrink:0}
   .form-row textarea{min-height:120px}
   .rsvp .btn{min-height:50px;font-size:.68rem;letter-spacing:.1em}
   .lightbox{padding:16px}
