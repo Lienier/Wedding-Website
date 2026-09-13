@@ -330,7 +330,15 @@
         </div>
 
         <!-- Prenuptial gallery images -->
-        <div class="gallery prenuptial-gallery" id="galleryGrid">
+        <div class="depth-carousel-wrap reveal" id="prenuptialCarousel">
+          <button class="depth-arrow depth-arrow-prev" type="button" aria-label="Previous prenuptial photo">
+            <span aria-hidden="true">&lsaquo;</span>
+          </button>
+          <button class="depth-arrow depth-arrow-next" type="button" aria-label="Next prenuptial photo">
+            <span aria-hidden="true">&rsaquo;</span>
+          </button>
+
+          <div class="gallery prenuptial-gallery" id="galleryGrid" role="group" aria-label="Our prenuptial moments carousel" tabindex="0">
           <button class="reveal" type="button" aria-label="Enlarge prenuptial photo 1 of 12" data-full="assets/webp/DQZ27239 22.webp">
             <img src="assets/webp/DQZ27239 22.webp" alt="Philip and Ednalyn prenuptial photo 1" loading="lazy" decoding="async" width="900" height="1125">
           </button>
@@ -367,6 +375,9 @@
           <button class="reveal" type="button" aria-label="Enlarge prenuptial photo 12 of 12" data-full="assets/webp/DQZ17044 1378.webp">
             <img src="assets/webp/DQZ17044 1378.webp" alt="Philip and Ednalyn prenuptial photo 12" loading="lazy" decoding="async" width="900" height="1125">
           </button>
+          </div>
+
+          <div class="depth-dots" id="prenuptialDots" role="tablist" aria-label="Prenuptial photo slides"></div>
         </div>
       </div>
     </section>
@@ -430,14 +441,15 @@
 
     <!-- RSVP -->
     <section class="section" id="rsvp">
-      <div class="container rsvp">
-        <div>
-          <div class="eyebrow reveal">08 / RSVP</div>
-          <h2 class="display reveal">Will you<br>be there?</h2>
-          <p class="reveal">We would be honored to celebrate with you. Kindly respond on or before October 10, 2026.</p>
+      <div class="container rsvp rsvp-card">
+        <div class="rsvp-heading reveal">
+          <div class="rsvp-kindly"><span></span>Kindly<span></span></div>
+          <h2>RSVP</h2>
+          <p>On or before September 17,<br>2026</p>
+          <div class="rsvp-seat">We have reserved <span>1</span> seat for you.</div>
         </div>
 
-        <form id="rsvpForm" class="reveal">
+        <form id="rsvpForm" class="reveal rsvp-form">
           <div class="form-row">
             <label for="fullName">Full Name</label>
             <input id="fullName" name="fullName" required autocomplete="name">
@@ -456,17 +468,14 @@
             </div>
           </div>
 
-          <div class="form-row">
-            <label for="guests">Number of Guests</label>
-            <input id="guests" name="guests" type="number" min="1" step="1" value="1" required>
-          </div>
+          <input id="guests" name="guests" type="hidden" value="1">
 
           <div class="form-row">
             <label for="message">Message for the Couple</label>
             <textarea id="message" name="message" rows="4"></textarea>
           </div>
 
-          <button class="btn btn-solid" type="submit">Send Our RSVP <span>→</span></button>
+          <button class="btn btn-solid" type="submit">Send My RSVP <span>&rarr;</span></button>
           <div class="form-status" id="formStatus" role="status"></div>
         </form>
       </div>
