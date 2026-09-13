@@ -236,12 +236,14 @@ a{text-decoration:none}
 .attire-title{font-size:clamp(4.2rem,8vw,7.4rem);margin:18px 0 34px}
 .attire-panel{border-top:1px solid var(--line);padding-top:28px;margin-bottom:34px}
 .attire-panel h3{font-family:var(--serif);font-size:2rem;margin:0 0 10px;font-weight:500}
-.swatches{display:flex;gap:12px;margin:24px 0}
+.swatches{display:flex;flex-wrap:wrap;gap:12px;margin:24px 0}
 .swatch{width:46px;height:46px;border:1px solid rgba(0,0,0,.08)}
 .swatch-1{background:#D7DBE8}
 .swatch-2{background:#A9B4CC}
 .swatch-3{background:#6D7892}
 .swatch-4{background:#2C3343}
+.swatch-5{background:#2146A5}
+.swatch-6{background:#0D1F4D}
 .attire-note{border-left:2px solid var(--blue);padding:14px 0 14px 20px;color:var(--muted)}
 
 .split-editorial{display:grid;grid-template-columns:1fr 1fr;gap:clamp(50px,9vw,130px);align-items:center}
@@ -656,4 +658,17 @@ footer{text-align:center;padding:110px var(--side) 55px;border-top:1px solid rgb
     transition-duration:.001ms!important;
     scroll-behavior:auto!important;
   }
+}
+
+/* Prenuptial moments: twelve evenly sized photos. */
+.prenuptial-gallery{grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(14px,2.5vw,32px)}
+.prenuptial-gallery button{display:block;width:100%}
+.prenuptial-gallery img{display:block;aspect-ratio:4/5;height:auto}
+.prenuptial-gallery button:focus-visible{outline:2px solid var(--blue);outline-offset:5px}
+@media(max-width:800px){
+  .prenuptial-gallery{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:480px){
+  #gallery .gallery-head h2{font-size:clamp(2.8rem,12vw,4.4rem)}
+  .prenuptial-gallery{gap:12px}
 }

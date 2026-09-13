@@ -1124,7 +1124,7 @@ const DESKTOP_W = 1200;
 const DESKTOP_H = 900;
 const MOBILE_W = 1100;
 const MOBILE_H = 980;
-const STORAGE_KEY = "pe_wall_boardstyled_test_v1";
+const STORAGE_KEY = "pe_wall_wishes_v1";
 const supabaseClient = window.getSupabaseClient?.();
 
 const papers = ["paper-white","paper-cream","paper-blue","paper-blush","paper-sage","paper-butter","paper-lavender","paper-mist"];
@@ -1133,32 +1133,8 @@ const sizes = ["size-sm","size-md","size-lg","size-tall","size-wide"];
 const shapes = ["shape-clean","shape-soft","shape-rounded","shape-ticket","shape-fold","shape-clip"];
 const decors = ["decor-pin","decor-tape","decor-clip"];
 
-const starterNotes = [
-  {id:"s1",name:"Tita Maria",relation:"Family",type:"Prayer",
-   message:"May your home always be filled with grace, patience, laughter, and a love that keeps choosing each other.",
-   likes:18,liked:false,paper:"paper-blue",rot:-1.5,x:72,y:84,z:1,size:"size-lg",shape:"shape-soft",decor:"decor-pin"},
-  {id:"s2",name:"Paolo",relation:"Friend of the groom",type:"Advice",
-   message:"Keep choosing each other — especially on the ordinary days. Those are the days that build a lifetime.",
-   likes:24,liked:false,paper:"paper-cream",rot:1.1,x:340,y:156,z:2,size:"size-md",shape:"shape-clean",decor:"decor-tape"},
-  {id:"s3",name:"Camille",relation:"College friend",type:"Wish",
-   message:"May every year together feel less like counting time and more like collecting beautiful little moments.",
-   likes:13,liked:false,paper:"paper-blush",rot:-.9,x:620,y:78,z:3,size:"size-tall",shape:"shape-rounded",decor:"decor-clip"},
-  {id:"s4",name:"Isabella",relation:"Family",type:"Memory",
-   message:"From all the little stories before this day to the ones still waiting to be written — I’m so happy you found home in each other.",
-   likes:21,liked:false,paper:"paper-sage",rot:1.8,x:845,y:175,z:4,size:"size-wide",shape:"shape-ticket",decor:"decor-pin"},
-  {id:"s5",name:"Gabriel",relation:"Best friend",type:"Advice",
-   message:"Always be on the same team. Even when you disagree, remember the problem is the opponent — never each other.",
-   likes:30,liked:false,paper:"paper-white",rot:-1.2,x:170,y:525,z:5,size:"size-md",shape:"shape-fold",decor:"decor-clip"},
-  {id:"s6",name:"Anonymous",relation:"Wedding Guest",type:"Wish",
-   message:"To a love that feels calm, certain, and worth coming home to. Congratulations, Philip & Ednalyn.",
-   likes:11,liked:false,paper:"paper-butter",rot:.7,x:585,y:555,z:6,size:"size-sm",shape:"shape-soft",decor:"decor-tape"},
-  {id:"s7",name:"Mia",relation:"Friend of the bride",type:"Prayer",
-   message:"May God bless every season of your marriage and give you gentleness for the hard days and gratitude for the beautiful ones.",
-   likes:17,liked:false,paper:"paper-lavender",rot:1.4,x:818,y:608,z:7,size:"size-lg",shape:"shape-rounded",decor:"decor-pin"}
-];
-
 let stored = JSON.parse(localStorage.getItem(STORAGE_KEY) || "null");
-let notes = stored?.notes || starterNotes.map(n=>({...n}));
+let notes = stored?.notes || [];
 let maxZ = stored?.maxZ || Math.max(...notes.map(n=>n.z),1);
 let currentFilter = "all";
 let activeReaderId = null;

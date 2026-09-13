@@ -1,0 +1,456 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#efe7da" />
+  <title>Scrapbook Reveal Animation</title>
+  <style>
+:root {
+  --paper: #f4efe7;
+  --ink: #6f7a69;
+  --ink-soft: #9aa292;
+  --blue: #b8d7e9;
+  --cream: #e8d8bd;
+  --duration: 12s;
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; min-height: 100%; }
+body {
+  background: radial-gradient(circle at 50% 20%, #fbf8f2 0, #eee6d9 52%, #ddd0bd 100%);
+  color: #30342e;
+  font-family: ui-serif, Georgia, Cambria, "Times New Roman", serif;
+  -webkit-tap-highlight-color: transparent;
+  overscroll-behavior: none;
+}
+
+.page-shell {
+  min-height: 100vh;
+  min-height: 100svh;
+  display: grid;
+  place-items: center;
+  padding: clamp(0px, 3vw, 24px);
+}
+
+.scene {
+  position: relative;
+  width: min(100vw, calc(100svh * 0.982142857), 440px);
+  aspect-ratio: 440 / 448;
+  overflow: hidden;
+  isolation: isolate;
+  background: #d9e3e7;
+  box-shadow: 0 28px 70px rgba(61, 46, 27, .18), 0 2px 8px rgba(61, 46, 27, .08);
+  container-type: inline-size;
+  touch-action: manipulation;
+}
+
+@media (min-width: 560px) {
+  .scene { border-radius: 24px; }
+}
+
+.collage {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background:
+    linear-gradient(90deg, transparent 49.6%, rgba(104,112,102,.18) 49.8%, rgba(104,112,102,.18) 50.2%, transparent 50.4%),
+    linear-gradient(0deg, transparent 49.6%, rgba(104,112,102,.14) 49.8%, rgba(104,112,102,.14) 50.2%, transparent 50.4%),
+    #dfe3d7;
+}
+
+.map-noise {
+  position: absolute;
+  inset: 0;
+  opacity: .8;
+  background-image:
+    radial-gradient(circle at 12% 19%, rgba(75,92,73,.45) 0 1px, transparent 1.4px),
+    radial-gradient(circle at 78% 33%, rgba(75,92,73,.35) 0 1px, transparent 1.2px),
+    radial-gradient(circle at 31% 78%, rgba(75,92,73,.35) 0 1px, transparent 1.3px),
+    repeating-linear-gradient(17deg, transparent 0 18px, rgba(91,116,93,.16) 19px 20px, transparent 21px 34px),
+    repeating-linear-gradient(-36deg, transparent 0 25px, rgba(77,103,83,.13) 26px 27px, transparent 28px 43px);
+  background-size: 29px 31px, 37px 41px, 43px 47px, auto, auto;
+  filter: contrast(.9);
+}
+
+.photo {
+  position: absolute;
+  border: 5px solid rgba(247,242,233,.88);
+  box-shadow: 0 7px 14px rgba(49,57,48,.18);
+  overflow: hidden;
+}
+.photo::before,
+.photo::after { content: ""; position: absolute; inset: 0; }
+.photo::after {
+  background: linear-gradient(135deg, rgba(255,255,255,.2), transparent 45%, rgba(32,38,30,.1));
+  mix-blend-mode: soft-light;
+}
+.photo span {
+  position: absolute;
+  right: 7px;
+  bottom: 5px;
+  z-index: 2;
+  font: 600 8cqw/1 ui-sans-serif, system-ui, sans-serif;
+  letter-spacing: .08em;
+  color: rgba(255,255,255,.8);
+}
+.photo-a {
+  width: 39%; height: 39%; left: -3%; top: 18%; transform: rotate(-4deg);
+  background:
+    linear-gradient(175deg, transparent 0 49%, rgba(245,242,235,.82) 50% 53%, transparent 54%),
+    linear-gradient(150deg, transparent 0 42%, #566f46 43% 46%, transparent 47%),
+    linear-gradient(20deg, #334d34 0 14%, #8aa5b9 15% 50%, #d6c7a4 51% 63%, #535b4d 64%);
+}
+.photo-b {
+  width: 41%; height: 51%; right: 4%; top: 3%; transform: rotate(3deg);
+  background:
+    radial-gradient(ellipse at 78% 62%, #4c7148 0 8%, transparent 9%),
+    radial-gradient(ellipse at 72% 72%, #355f3c 0 8%, transparent 9%),
+    radial-gradient(ellipse at 82% 81%, #6b864e 0 9%, transparent 10%),
+    linear-gradient(#93c3dd 0 58%, #c9b799 59% 63%, #6a7d60 64% 100%);
+}
+.photo-c {
+  width: 44%; height: 39%; left: 5%; bottom: 2%; transform: rotate(2deg);
+  background:
+    linear-gradient(65deg, transparent 0 43%, rgba(253,247,239,.88) 44% 49%, transparent 50%),
+    linear-gradient(115deg, transparent 0 45%, rgba(253,247,239,.88) 46% 51%, transparent 52%),
+    linear-gradient(#b9d4e2 0 51%, #e6ded1 52% 56%, #496641 57%);
+}
+.photo-d {
+  width: 42%; height: 43%; right: -2%; bottom: -1%; transform: rotate(-3deg);
+  background:
+    linear-gradient(170deg, transparent 0 56%, rgba(245,242,235,.88) 57% 61%, transparent 62%),
+    repeating-linear-gradient(90deg, transparent 0 11%, rgba(37,70,39,.7) 12% 16%, transparent 17% 24%),
+    linear-gradient(#bedce9 0 55%, #a0c4d8 56% 60%, #d1bc99 61%);
+}
+
+.tape {
+  position: absolute;
+  z-index: 3;
+  width: 24%; height: 7%;
+  background: rgba(239,228,197,.72);
+  box-shadow: inset 0 0 0 1px rgba(133,110,78,.12);
+  backdrop-filter: blur(1px);
+}
+.tape-a { left: 18%; top: 9%; transform: rotate(-8deg); }
+.tape-b { right: 13%; bottom: 12%; transform: rotate(9deg); }
+.postcard-mark {
+  position: absolute; top: 8%; right: 6%; z-index: 4;
+  border: 1px solid rgba(70,85,65,.38); border-radius: 50%;
+  width: 19%; aspect-ratio: 1; display:grid; place-items:center;
+  transform: rotate(11deg);
+  color: rgba(70,85,65,.5);
+  font: 600 3cqw/1 ui-sans-serif, system-ui, sans-serif;
+  letter-spacing: .1em;
+}
+
+.paper-card {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  overflow: hidden;
+  color: var(--ink);
+  background:
+    radial-gradient(circle at 50% 50%, rgba(255,255,255,.86), rgba(255,255,255,.06) 60%),
+    repeating-linear-gradient(0deg, rgba(97,92,76,.018) 0 1px, transparent 1px 4px),
+    var(--paper);
+  clip-path: inset(0 50% 0 50%);
+  animation: paperIn var(--duration) cubic-bezier(.72,.01,.21,1) infinite;
+}
+
+.botanical {
+  position:absolute;
+  width: 38%;
+  height:auto;
+  color: #a9b09f;
+  stroke: currentColor;
+  stroke-width: 1.35;
+  opacity:.52;
+}
+.botanical-left { left:-8%; bottom:-2%; transform: rotate(-4deg); }
+.botanical-right { right:-8%; top:-8%; transform: rotate(180deg); }
+
+.paper-content {
+  position: relative;
+  width:100%; height:100%;
+  text-align:center;
+  padding: 14% 10% 8%;
+}
+.eyebrow {
+  margin:0 0 4%;
+  font: 500 2.3cqw/1.2 ui-sans-serif, system-ui, sans-serif;
+  letter-spacing:.3em;
+  opacity:.65;
+}
+.monogram {
+  font-size: 11cqw;
+  line-height:.8;
+  letter-spacing:.08em;
+}
+.monogram span { font-size:.55em; font-style:italic; margin:0 .05em; }
+.script-title,
+.footer-script {
+  font-family: "Snell Roundhand", "Segoe Script", "Bradley Hand", "Brush Script MT", cursive;
+  font-weight:400;
+}
+.script-title { margin: 4% 0 2%; font-size: 8.4cqw; transform: rotate(-2deg); }
+.date { margin:0; font-size: 5.4cqw; letter-spacing:.22em; }
+.caption {
+  max-width: 76%; margin: 4% auto 0;
+  font-style:italic; font-size: 3.3cqw; opacity:.75;
+}
+
+.tram-wrap {
+  position:absolute;
+  left:19%; right:19%; top:53%;
+  color:#7e9071;
+  opacity: 0;
+  transform: translateX(35%) translateY(4px) scale(.92);
+  animation: tramEnter var(--duration) cubic-bezier(.22,.72,.28,1) infinite;
+}
+.tram { display:block; width:100%; height:auto; }
+
+.mountains {
+  position:absolute;
+  left:4%; right:4%; bottom:7%;
+  width:92%;
+  color:#b2b4ad;
+  opacity:0;
+  stroke-dasharray: 1200;
+  stroke-dashoffset:1200;
+  animation: mountainDraw var(--duration) ease-in-out infinite;
+}
+.footer-script {
+  position:absolute;
+  bottom:7%; left:0; right:0;
+  margin:0;
+  font-size:7cqw;
+  opacity:0;
+  animation: footerIn var(--duration) ease infinite;
+}
+
+.intro-slats {
+  position:absolute; inset:0; z-index:8; pointer-events:none;
+}
+.intro-slats i {
+  position:absolute; top:0; bottom:0;
+  width:16%;
+  background: linear-gradient(90deg, rgba(200,220,230,.5), rgba(238,241,234,.86));
+  box-shadow: 0 0 18px rgba(48,65,65,.13);
+  transform: scaleX(.12);
+  opacity:0;
+  animation: slatClose var(--duration) cubic-bezier(.65,.01,.31,1) infinite;
+}
+.intro-slats i:nth-child(1){ left:35%; transform-origin:right center; }
+.intro-slats i:nth-child(2){ left:49%; transform-origin:center; animation-delay:-.08s; }
+.intro-slats i:nth-child(3){ left:53%; transform-origin:left center; animation-delay:-.14s; }
+
+.reveal {
+  z-index:20;
+  clip-path: polygon(50% 48%, 52% 50%, 50% 52%, 48% 50%, 50% 48%, 52% 50%, 50% 52%, 48% 50%);
+  animation: starReveal var(--duration) cubic-bezier(.66,.05,.29,1) infinite;
+}
+
+.creases { position:absolute; inset:0; z-index:22; pointer-events:none; opacity:0; animation: creaseFlash var(--duration) ease infinite; }
+.creases i { position:absolute; left:50%; top:50%; width:70%; height:1px; background:rgba(255,255,255,.8); transform-origin:left center; box-shadow:0 0 5px rgba(62,70,60,.16); }
+.creases i:nth-child(1){ transform:rotate(45deg); }
+.creases i:nth-child(2){ transform:rotate(135deg); }
+.creases i:nth-child(3){ transform:rotate(225deg); }
+.creases i:nth-child(4){ transform:rotate(315deg); }
+
+.tap-layer { position:absolute; inset:0; z-index:50; border:0; background:transparent; cursor:pointer; }
+.tap-layer:focus-visible { outline: 3px solid rgba(50,80,100,.55); outline-offset:-4px; }
+.hint {
+  position:absolute; z-index:45; left:50%; bottom:3.2%; transform:translateX(-50%);
+  padding:.45em .8em; border-radius:999px;
+  background:rgba(30,35,30,.55); color:white;
+  font:500 clamp(10px,2.4cqw,12px)/1 ui-sans-serif,system-ui,sans-serif;
+  opacity:0; animation: hintIn 3.2s ease 1 .6s both;
+  pointer-events:none; backdrop-filter:blur(6px);
+}
+
+.scene.paused * { animation-play-state: paused !important; }
+.scene.paused .hint { animation:none; opacity:.85; }
+.scene.paused .hint::after { content:" · paused"; }
+
+@keyframes paperIn {
+  0%, 9% { clip-path: inset(0 50% 0 50%); opacity:.98; }
+  22% { clip-path: inset(0 18% 0 15%); opacity:1; }
+  29%, 100% { clip-path: inset(0 0 0 0); opacity:1; }
+}
+@keyframes slatClose {
+  0%,8% { opacity:0; transform:scaleX(.1); }
+  12% { opacity:.9; transform:scaleX(.35); }
+  23% { opacity:.65; transform:scaleX(2.4); }
+  29%,100% { opacity:0; transform:scaleX(2.6); }
+}
+@keyframes tramEnter {
+  0%, 34% { opacity:0; transform:translateX(42%) translateY(5px) scale(.92); }
+  42% { opacity:.78; }
+  52%, 63% { opacity:.88; transform:translateX(0) translateY(0) scale(1); }
+  69%,100% { opacity:0; transform:translateX(-18%) translateY(-2px) scale(.98); }
+}
+@keyframes mountainDraw {
+  0%, 48% { opacity:0; stroke-dashoffset:1200; }
+  55% { opacity:.62; }
+  68% { opacity:.58; stroke-dashoffset:0; }
+  74%,100% { opacity:0; stroke-dashoffset:0; }
+}
+@keyframes footerIn {
+  0%, 56% { opacity:0; transform:translateY(8px); }
+  64%,71% { opacity:.62; transform:translateY(0); }
+  76%,100% { opacity:0; transform:translateY(-3px); }
+}
+@keyframes starReveal {
+  0%, 72% {
+    clip-path: polygon(50% 48%,52% 50%,50% 52%,48% 50%,50% 48%,52% 50%,50% 52%,48% 50%);
+  }
+  78% {
+    clip-path: polygon(50% 10%,60% 40%,90% 50%,60% 60%,50% 90%,40% 60%,10% 50%,40% 40%);
+  }
+  89%,100% {
+    clip-path: polygon(0 0,50% 0,100% 0,100% 50%,100% 100%,50% 100%,0 100%,0 50%);
+  }
+}
+@keyframes creaseFlash {
+  0%,73% { opacity:0; }
+  77% { opacity:.8; }
+  86%,100% { opacity:0; }
+}
+@keyframes hintIn {
+  0% { opacity:0; transform:translate(-50%,8px); }
+  25%,70% { opacity:.78; transform:translate(-50%,0); }
+  100% { opacity:0; transform:translate(-50%,-4px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .paper-card { animation:none; clip-path:inset(0); }
+  .intro-slats, .reveal, .creases { display:none; }
+  .tram-wrap { animation:none; opacity:.8; transform:none; }
+  .mountains { animation:none; opacity:.45; stroke-dashoffset:0; }
+  .footer-script { animation:none; opacity:.5; }
+  .hint { display:none; }
+}
+
+  </style>
+</head>
+<body>
+  <main class="page-shell">
+    <section class="scene" id="scene" aria-label="Animated scrapbook invitation">
+      <div class="collage" aria-hidden="true">
+        <div class="map-noise"></div>
+        <div class="photo photo-a"><span>01</span></div>
+        <div class="photo photo-b"><span>02</span></div>
+        <div class="photo photo-c"><span>03</span></div>
+        <div class="photo photo-d"><span>04</span></div>
+        <div class="tape tape-a"></div>
+        <div class="tape tape-b"></div>
+        <div class="postcard-mark">PARIS · 23</div>
+      </div>
+
+      <div class="intro-slats" aria-hidden="true">
+        <i></i><i></i><i></i>
+      </div>
+
+      <article class="paper-card" aria-hidden="true">
+        <svg class="botanical botanical-left" viewBox="0 0 160 220" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M18 215C34 170 31 124 54 82C70 52 91 25 127 8" />
+          <path d="M38 156C17 144 11 123 15 107C35 111 46 126 46 145" />
+          <path d="M57 111C42 91 47 69 58 57C73 68 79 88 69 105" />
+          <path d="M78 73C70 51 83 31 97 23C108 38 107 57 93 70" />
+          <path d="M51 135C76 127 91 136 100 150C83 163 63 158 50 148" />
+        </svg>
+        <svg class="botanical botanical-right" viewBox="0 0 160 220" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M142 215C126 170 129 124 106 82C90 52 69 25 33 8" />
+          <path d="M122 156C143 144 149 123 145 107C125 111 114 126 114 145" />
+          <path d="M103 111C118 91 113 69 102 57C87 68 81 88 91 105" />
+          <path d="M82 73C90 51 77 31 63 23C52 38 53 57 67 70" />
+          <path d="M109 135C84 127 69 136 60 150C77 163 97 158 110 148" />
+        </svg>
+
+        <div class="paper-content">
+          <p class="eyebrow">YOU ARE INVITED</p>
+          <div class="monogram">A <span>&</span> M</div>
+          <p class="script-title">a little escape</p>
+          <p class="date">23 · 09 · 26</p>
+          <p class="caption">Meet us where the mountains touch the sky</p>
+
+          <div class="tram-wrap">
+            <svg class="tram" viewBox="0 0 220 88" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20 26h151l20 17v23H20z" />
+                <path d="M37 26V14h83v12M127 14h34l13 12" />
+                <path d="M34 38h32v17H34zm43 0h32v17H77zm44 0h32v17h-32z" />
+                <path d="M20 61h171M10 71h196" />
+                <circle cx="57" cy="70" r="9" fill="#f4efe7"/><circle cx="156" cy="70" r="9" fill="#f4efe7"/>
+                <path d="M42 19h49m53 0h17" />
+              </g>
+            </svg>
+          </div>
+
+          <svg class="mountains" viewBox="0 0 520 190" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M2 166 82 84l34 33 66-80 43 53 48-70 63 87 36-41 146 100"/>
+              <path d="M77 90l12 22 20-8 15 20M176 44l7 31 20-8 19 29M270 28l12 36 20-9 31 56"/>
+              <path d="M7 169c84-16 134-13 191-2 66 13 122 7 168-1 46-8 96-9 151 2"/>
+            </g>
+          </svg>
+          <p class="footer-script">save the date</p>
+        </div>
+      </article>
+
+      <div class="collage reveal" aria-hidden="true">
+        <div class="map-noise"></div>
+        <div class="photo photo-a"><span>01</span></div>
+        <div class="photo photo-b"><span>02</span></div>
+        <div class="photo photo-c"><span>03</span></div>
+        <div class="photo photo-d"><span>04</span></div>
+        <div class="tape tape-a"></div>
+        <div class="tape tape-b"></div>
+        <div class="postcard-mark">PARIS · 23</div>
+      </div>
+
+      <div class="creases" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+      <button class="tap-layer" id="toggle" type="button" aria-label="Pause animation"></button>
+      <div class="hint" id="hint" aria-hidden="true">tap to pause</div>
+    </section>
+  </main>
+  <script>
+(() => {
+  const scene = document.getElementById('scene');
+  const toggle = document.getElementById('toggle');
+  const hint = document.getElementById('hint');
+
+  const setState = (paused) => {
+    scene.classList.toggle('paused', paused);
+    toggle.setAttribute('aria-label', paused ? 'Resume animation' : 'Pause animation');
+    hint.textContent = paused ? 'tap to resume' : 'tap to pause';
+  };
+
+  toggle.addEventListener('click', () => setState(!scene.classList.contains('paused')));
+
+  // Re-run cleanly after returning from the background on mobile browsers.
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden || scene.classList.contains('paused')) return;
+    scene.getAnimations({ subtree: true }).forEach((animation) => {
+      if (animation.playState !== 'finished') animation.play();
+    });
+  });
+})();
+
+// Optional preview helper: append ?t=5 to freeze the loop at 5 seconds.
+(() => {
+  const t = Number(new URLSearchParams(location.search).get('t'));
+  if (!Number.isFinite(t) || t < 0) return;
+  requestAnimationFrame(() => {
+    document.getElementById('scene').classList.add('paused');
+    document.getAnimations({ subtree: true }).forEach((animation) => {
+      animation.currentTime = t * 1000;
+      animation.pause();
+    });
+  });
+})();
+
+  </script>
+</body>
+</html>
