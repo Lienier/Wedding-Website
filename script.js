@@ -65,6 +65,38 @@ mobilePanel.querySelectorAll("a").forEach(a => {
   a.addEventListener("click", closeMenu);
 });
 
+// Try to show the cinematic video in landscape when mobile users maximize it.
+const prenuptialVideo = document.getElementById("prenuptialVideo");
+if(prenuptialVideo){
+  const lockVideoLandscape = async () => {
+    const fullscreenEl = document.fullscreenElement || document.webkitFullscreenElement;
+    if(fullscreenEl !== prenuptialVideo && !prenuptialVideo.contains(fullscreenEl)) return;
+    try {
+      await screen.orientation?.lock?.("landscape");
+    } catch(e) {
+      // Mobile browsers that do not allow orientation lock keep normal fullscreen playback.
+    }
+  };
+
+  const unlockVideoOrientation = () => {
+    if(document.fullscreenElement || document.webkitFullscreenElement) return;
+    try {
+      screen.orientation?.unlock?.();
+    } catch(e) {}
+  };
+
+  prenuptialVideo.addEventListener("webkitbeginfullscreen", lockVideoLandscape);
+  prenuptialVideo.addEventListener("webkitendfullscreen", unlockVideoOrientation);
+  document.addEventListener("fullscreenchange", () => {
+    lockVideoLandscape();
+    unlockVideoOrientation();
+  });
+  document.addEventListener("webkitfullscreenchange", () => {
+    lockVideoLandscape();
+    unlockVideoOrientation();
+  });
+}
+
 // COUNTDOWN
 const daysEl = document.getElementById("days");
 const hoursEl = document.getElementById("hours");

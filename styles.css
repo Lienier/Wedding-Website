@@ -161,6 +161,12 @@ main{overflow:hidden;max-width:100%}
 .scroll-line{width:1px;height:62px;background:linear-gradient(to bottom,var(--blue),transparent);animation:pulseLine 1.8s ease-in-out infinite}
 @keyframes pulseLine{50%{opacity:.25;transform:scaleY(.75)}}
 
+.video-frame{border-top:1px solid var(--line);padding-top:18px}
+.video-frame video{display:block;width:100%;aspect-ratio:12/5;object-fit:cover;background:#0f1420}
+.video-frame video:fullscreen{width:100vw;height:100vh;object-fit:contain;background:#000}
+.video-frame video:-webkit-full-screen{width:100vw;height:100vh;object-fit:contain;background:#000}
+.prenuptial-video{margin-top:clamp(34px,6vw,76px)}
+
 .statement-grid{display:grid;grid-template-columns:minmax(0,2fr) minmax(260px,.8fr);gap:clamp(40px,8vw,130px);align-items:end}
 .statement-title{font-size:clamp(4.2rem,9vw,8.6rem)}
 .statement-copy{max-width:360px;color:var(--muted);margin:0 0 8px;font-family:var(--serif);font-size:1.28rem}
@@ -609,6 +615,9 @@ footer{text-align:center;padding:110px var(--side) 55px;border-top:1px solid rgb
   .collage figure{position:static!important;width:auto!important;height:auto!important}
   .collage img{aspect-ratio:4/5}
   .collage .c2 img,.collage .c4 img{aspect-ratio:3/2}
+
+  .video-frame{padding-top:14px}
+  .prenuptial-video{margin-top:36px}
 
   .story-block,
   .story-block.reverse{
